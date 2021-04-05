@@ -30,9 +30,8 @@ import {FakeBackendInterceptor} from './fake-backend.interceptor';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
     // provider used to create fake backend
-    FakeBackendInterceptor
+    { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

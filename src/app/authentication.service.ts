@@ -10,8 +10,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private userSubject: BehaviorSubject<User>;
-  public user: Observable<User>;
+  private userSubject: BehaviorSubject<User | null>;
+  public user: Observable<User | null>;
 
   constructor(
     private router: Router,
@@ -19,14 +19,14 @@ export class AuthenticationService {
   ) {
     const userString = localStorage.getItem('user');
     if (userString !== null){
-      this.userSubject = new BehaviorSubject<User>(JSON.parse(userString));
+      this.userSubject = new BehaviorSubject<User | null>(JSON.parse(userString));
     } else {
-      this.userSubject = new BehaviorSubject<User>(new User());  
+      this.userSubject = new BehaviorSubject<User | null>(null);  
     }
     this.user = this.userSubject.asObservable();
   }
 
-  public get userValue(): User{
+  public get userValue(): User | null{
     return this.userSubject.value;
   }
 
@@ -42,7 +42,7 @@ export class AuthenticationService {
   logout() {
     //remove user from local storage to log user out
     localStorage.removeItem('user');
-    this.userSubject.next(new User());
+    this.userSubject.next(null);
     this.router.navigate(['/login'])
   }
 }

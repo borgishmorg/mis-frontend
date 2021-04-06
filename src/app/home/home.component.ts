@@ -4,7 +4,10 @@ import { AuthenticationService } from '../authentication.service';
 import { User } from '../user';
 import { UserService } from '../user.service';
 
-@Component({ templateUrl: 'home.component.html' })
+@Component({ 
+    templateUrl: 'home.component.html', 
+    styleUrls: ['home.component.css'] 
+})
 export class HomeComponent {
     loading = false;
     user: User;

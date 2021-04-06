@@ -3,7 +3,10 @@ import { first } from 'rxjs/operators';
 import { User } from '../user';
 import { UserService } from '../user.service';
 
-@Component({ templateUrl: 'admin.component.html' })
+@Component({ 
+    templateUrl: 'admin.component.html', 
+    styleUrls: ['admin.component.css'] 
+})
 export class AdminComponent implements OnInit {
     loading = false;
     users: User[] = [];

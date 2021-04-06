@@ -1,13 +1,10 @@
-<!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
-    <div class="navbar-nav">
-        <a class="nav-item nav-link" routerLink="/">Home</a>
-        <a class="nav-item nav-link" routerLink="/admin" *ngIf="isAdmin">Admin</a>
-        <a class="nav-item nav-link" (click)="logout()">Logout</a>
-    </div>
-</nav>
-
-<!-- main app container -->
-<div class="container">
+<mat-toolbar *ngIf="user">
+    <h1 class="nav-link">МИС</h1>
+    <a mat-raised-button color="primary" class="nav-link" routerLink="/">Home</a>
+    <a mat-raised-button color="primary" class="nav-link" routerLink="/admin" *ngIf="isAdmin">Admin</a>
+    <span class="example-spacer"></span>
+    <a mat-raised-button color="warn" class="nav-logout" (click)="logout()">Logout</a>
+</mat-toolbar>
+<div>
     <router-outlet></router-outlet>
 </div>

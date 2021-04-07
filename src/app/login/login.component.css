@@ -1,0 +1,21 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+mat-card {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+mat-card-footer {
+    padding: 0.2em 1em 0.2em 1em;
+}

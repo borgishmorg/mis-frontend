@@ -1,32 +1,40 @@
-<div class="col-md-6 offset-md-3 mt-5">
-    <div class="alert alert-info">
-        <strong>Normal User</strong> - U: user P: user<br />
-        <strong>Administrator</strong> - U: admin P: admin
-    </div>
-    <div class="card">
-        <h4 class="card-header">Angular 10 Role Based Auth Example</h4>
-        <div class="card-body">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                        <div *ngIf="f.username.errors.required">Username is required</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                        <div *ngIf="f.password.errors.required">Password is required</div>
-                    </div>
-                </div>
-                <button [disabled]="loading" class="btn btn-primary">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Login
-                </button>
-                <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
-            </form>
-        </div>
-    </div>
+<div class='container'>
+    <mat-card>
+        <mat-card-title>МИС</mat-card-title>        
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="standard">
+                <mat-label for="username">Username</mat-label>
+                <input matInput 
+                    id="username" 
+                    type="text" 
+                    formControlName="username" 
+                    [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+                    placeholder=""
+                />
+                <mat-hint *ngIf="submitted && f.username.errors && f.username.errors.required">Username is required</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+                <mat-label for="password">Password</mat-label>
+                <input matInput 
+                    id="password" 
+                    type="password" 
+                    formControlName="password" 
+                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+                    placeholder=""
+                />
+                <mat-hint *ngIf="submitted && f.password.errors && f.password.errors.required">Password is required</mat-hint>
+            </mat-form-field>
+            <button mat-raised-button color="primary" [disabled]="loading">
+                <span *ngIf="loading"></span>
+                Login
+            </button>
+            <div *ngIf="error">{{error}}</div>
+        </form>
+        <mat-card-footer>
+            <p>
+                <strong>Normal User</strong> - U: user P: user<br/>
+                <strong>Administrator</strong> - U: admin P: admin
+            </p>
+        </mat-card-footer>
+    </mat-card>
 </div>

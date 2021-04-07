@@ -12,6 +12,7 @@ import { AuthenticationService } from '../authentication.service';
 export class LoginComponent implements OnInit {
     loginForm!: FormGroup;
     loading = false;
+    hidePassword = true;
     submitted = false;
     error = '';
 
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
-            password: ['', Validators.required]
+            password: ['', Validators.required],
         });
     }
 

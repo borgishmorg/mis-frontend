@@ -17,19 +17,22 @@
                 <mat-label for="password">Password</mat-label>
                 <input matInput 
                     id="password" 
-                    type="password" 
+                    [type]="hidePassword ? 'password' : 'text'"
                     formControlName="password" 
                     [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
                     placeholder=""
                 />
+                <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
                 <mat-hint *ngIf="submitted && f.password.errors && f.password.errors.required">Password is required</mat-hint>
             </mat-form-field>
-            <button mat-raised-button color="primary" [disabled]="loading">
+            <button mat-raised-button type="submit" color="primary" [disabled]="loading">
                 <span *ngIf="loading"></span>
                 Login
             </button>
-            <div *ngIf="error">{{error}}</div>
         </form>
+        <p style="color: red;" *ngIf="error">{{error}}</p>
         <mat-card-footer>
             <p>
                 <strong>Normal User</strong> - U: user P: user<br/>

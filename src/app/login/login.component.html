@@ -28,8 +28,8 @@
                 <mat-hint *ngIf="submitted && f.password.errors && f.password.errors.required">Password is required</mat-hint>
             </mat-form-field>
             <button mat-raised-button type="submit" color="primary" [disabled]="loading">
-                <span *ngIf="loading"></span>
-                Login
+                <mat-spinner diameter="37" *ngIf="loading"></mat-spinner>
+                <span *ngIf="!loading">Login</span>
             </button>
         </form>
         <p style="color: red;" *ngIf="error">{{error}}</p>

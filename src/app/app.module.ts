@@ -18,32 +18,34 @@ import { MatCardModule } from '@angular/material/card'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatIconModule } from '@angular/material/icon'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AdminComponent,
-    HomeComponent,
-    LoginComponent
+	AppComponent,
+	AdminComponent,
+	HomeComponent,
+	LoginComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule
+	BrowserModule,
+	AppRoutingModule,
+	BrowserAnimationsModule,
+	ReactiveFormsModule,
+	HttpClientModule,
+	MatToolbarModule,
+	MatButtonModule,
+	MatCardModule,
+	MatFormFieldModule,
+	MatInputModule,
+	MatIconModule,
+	MatProgressSpinnerModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    // provider used to create fake backend
-    { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true}
+	{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+	{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+	// provider used to create fake backend
+	{ provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

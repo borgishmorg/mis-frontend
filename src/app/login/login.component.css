@@ -19,3 +19,7 @@ form {
 mat-card-footer {
     padding: 0.2em 1em 0.2em 1em;
 }
+
+mat-spinner {
+    margin: 0 auto;
+}

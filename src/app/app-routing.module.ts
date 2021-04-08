@@ -8,23 +8,26 @@ import { Role } from './role.enum';
 
 const routes: Routes = [
   {
-      path: '',
-      component: HomeComponent,
-      canActivate: [AuthGuard]
+    path: '',
+    component: HomeComponent,
+    canActivate: [AuthGuard]
   },
   {
-      path: 'admin',
-      component: AdminComponent,
-      canActivate: [AuthGuard],
-      data: { roles: [Role.Admin] }
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Admin] }
   },
   {
-      path: 'login',
-      component: LoginComponent
+    path: 'login',
+    component: LoginComponent
   },
 
   // otherwise redirect to home
-  { path: '**', redirectTo: '' }
+  { 
+    path: '**', 
+    redirectTo: '' 
+  }
 ];
 
 @NgModule({

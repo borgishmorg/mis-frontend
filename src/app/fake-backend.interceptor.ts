@@ -59,13 +59,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
   }
 
   function getUserById() {
-      if (!isLoggedIn()) return unauthorized();
+    if (!isLoggedIn()) return unauthorized();
+    const cUser = currentUser();
+    if (cUser && !isAdmin() && cUser.id !== idFromUrl()) return unauthorized();
+    // only admins can access other user records
 
-      // only admins can access other user records
-      if (!isAdmin() && currentUser()!.id !== idFromUrl()) return unauthorized();
-
-      const user = users.find(x => x.id === idFromUrl());
-      return ok(user);
+    const user = users.find(x => x.id === idFromUrl());
+    return ok(user);
   }
 
   // helper functions
@@ -91,13 +91,21 @@ export class FakeBackendInterceptor implements HttpInterceptor {
   }
 
   function isAdmin() {
-      return isLoggedIn() && currentUser()!.role === Role.Admin;
+    const user = currentUser();
+    if (user) {
+        return isLoggedIn() && user.role === Role.Admin;
+    }
+    return false;
   }
 
   function currentUser() {
-      if (!isLoggedIn()) return;
-      const id = parseInt(headers.get('Authorization')!.split('.')[1]);
-      return users.find(x => x.id === id);
+    if (!isLoggedIn()) return;
+    const authorizationHeader = headers.get('Authorization');
+    if (authorizationHeader) {
+    const id = parseInt(authorizationHeader.split('.')[1]);
+    return users.find(x => x.id === id);
+    }
+    return undefined
   }
 
   function idFromUrl() {

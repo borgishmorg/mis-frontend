@@ -1,6 +1,6 @@
 <div class="card mt-4">
     <h4 class="card-header">Home</h4>
-    <div class="card-body">
+    <div class="card-body" *ngIf="user">
         <p>You're logged in with Angular 10 & JWT!!</p>
         <p>Your role is: <strong>{{user.role}}</strong>.</p>
         <p>This page can be accessed by <u>all authenticated users</u>.</p>

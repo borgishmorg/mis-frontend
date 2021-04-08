@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
@@ -9,8 +9,8 @@ import { AuthenticationService } from '../authentication.service';
     templateUrl: 'login.component.html', 
     styleUrls: ['login.component.css'] 
 })
-export class LoginComponent implements OnInit {
-    loginForm!: FormGroup;
+export class LoginComponent{
+    loginForm: FormGroup;
     loading = false;
     hidePassword = true;
     submitted = false;
@@ -21,18 +21,15 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService
-    ) { 
-        // redirect to home if already logged in
-        if (this.authenticationService.userValue) { 
-            this.router.navigate(['/']);
-        }
-    }
-
-    ngOnInit() {
+    ) {
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required],
         });
+        // redirect to home if already logged in
+        if (this.authenticationService.userValue) { 
+            this.router.navigate(['/']);
+        }
     }
 
     // convenience getter for easy access to form fields

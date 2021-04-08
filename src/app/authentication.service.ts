@@ -10,23 +10,23 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private userSubject: BehaviorSubject<User | null>;
-  public user: Observable<User | null>;
+  private userSubject: BehaviorSubject<User | undefined>;
+  public user: Observable<User | undefined>;
 
   constructor(
     private router: Router,
     private http: HttpClient
   ) {
     const userString = localStorage.getItem('user');
-    if (userString !== null){
-      this.userSubject = new BehaviorSubject<User | null>(JSON.parse(userString));
+    if (userString){
+      this.userSubject = new BehaviorSubject<User | undefined>(JSON.parse(userString));
     } else {
-      this.userSubject = new BehaviorSubject<User | null>(null);  
+      this.userSubject = new BehaviorSubject<User | undefined>(undefined);  
     }
     this.user = this.userSubject.asObservable();
   }
 
-  public get userValue(): User | null{
+  public get userValue(): User | undefined{
     return this.userSubject.value;
   }
 
@@ -42,7 +42,7 @@ export class AuthenticationService {
   logout() {
     //remove user from local storage to log user out
     localStorage.removeItem('user');
-    this.userSubject.next(null);
+    this.userSubject.next(undefined);
     this.router.navigate(['/login'])
   }
 }

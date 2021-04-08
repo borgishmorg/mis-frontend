@@ -10,21 +10,20 @@ import { UserService } from '../user.service';
 })
 export class HomeComponent {
     loading = false;
-    user: User;
-    userFromApi: User | undefined;
+    user?: User;
+    userFromApi?: User;
 
     constructor(
         private userService: UserService,
         private authenticationService: AuthenticationService
     ) {
-        this.user = this.authenticationService.userValue!;
-    }
-
-    ngOnInit() {
-        this.loading = true;
-        this.userService.getById(this.user!.id).pipe(first()).subscribe(user => {
-            this.loading = false;
-            this.userFromApi = user;
-        });
+        if (this.authenticationService.userValue){
+            this.user = this.authenticationService.userValue;
+            this.loading = true;
+            this.userService.getById(this.user.id).pipe(first()).subscribe(user => {
+                this.loading = false;
+                this.userFromApi = user;
+            });
+        }
     }
 }

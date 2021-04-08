@@ -10,7 +10,7 @@ import { User } from './user';
 })
 export class AppComponent {
   title = 'mis-frontend';
-  user: User | null = null;
+  user?: User;
 
   constructor(private authenticationService: AuthenticationService) {
     this.authenticationService.user.subscribe(x => this.user = x);

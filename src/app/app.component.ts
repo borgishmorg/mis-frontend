@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
-import { Role } from './role.enum';
-import { User } from './user';
+import { User } from './models';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +16,7 @@ export class AppComponent {
   }
 
   get isAdmin() {
-    return this.user && this.user.role === Role.Admin;
+    return this.user && this.user.role.code === 'admin';
   }
 
   logout() {

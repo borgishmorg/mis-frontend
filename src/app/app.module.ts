@@ -11,7 +11,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './jwt.interceptor';
 import { ErrorInterceptor } from './error.interceptor';
-import { FakeBackendInterceptor } from './fake-backend.interceptor';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
@@ -43,9 +42,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
   ],
   providers: [
 	{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-	{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-	// provider used to create fake backend
-	{ provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true}
+	{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

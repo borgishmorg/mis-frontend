@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../authentication.service';
-import { User } from '../user';
+import { User } from '../models';
 import { UserService } from '../user.service';
 
 @Component({ 
@@ -20,7 +20,7 @@ export class HomeComponent {
     if (this.authenticationService.userValue){
       this.user = this.authenticationService.userValue;
       this.loading = true;
-      this.userService.getById(this.user.id).pipe(first()).subscribe(user => {
+      this.userService.get(this.user.id).pipe(first()).subscribe(user => {
         this.loading = false;
         this.userFromApi = user;
       });

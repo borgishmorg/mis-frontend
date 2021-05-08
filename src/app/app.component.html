@@ -6,6 +6,12 @@
         routerLink="/admin" 
         *ngIf="canSeeAdmin"
         >Admin</a>
+    <a mat-raised-button 
+        color="primary" 
+        class="nav-link" 
+        routerLink="/roles" 
+        *ngIf="canSeeRoles"
+        >Роли</a>
     <span class="example-spacer"></span>
     <a mat-raised-button color="warn" class="nav-logout" (click)="logout()">Logout</a>
 </mat-toolbar>

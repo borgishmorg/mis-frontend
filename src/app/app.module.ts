@@ -17,14 +17,18 @@ import { MatCardModule } from '@angular/material/card'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatIconModule } from '@angular/material/icon'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RolesComponent } from './roles/roles.component'
+import { MatExpansionModule } from '@angular/material/expansion'
+import { MatCheckboxModule } from '@angular/material/checkbox'
 
 @NgModule({
   declarations: [
 	AppComponent,
 	AdminComponent,
 	HomeComponent,
-	LoginComponent
+	LoginComponent,
+    RolesComponent
   ],
   imports: [
 	BrowserModule,
@@ -38,7 +42,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 	MatFormFieldModule,
 	MatInputModule,
 	MatIconModule,
-	MatProgressSpinnerModule
+	MatProgressSpinnerModule,
+	MatExpansionModule,
+	MatCheckboxModule
   ],
   providers: [
 	{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

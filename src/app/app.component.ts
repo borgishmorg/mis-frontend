@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { AuthenticationService } from '@services/authentication.service';
 import { TokenUser } from '@app/models'
-import { Permission } from '@app/auth.guard'
+import { PermissionEnum } from '@app/auth.guard'
 
 @Component({
   selector: 'app-root',
@@ -20,7 +20,11 @@ export class AppComponent {
   }
 
   get canSeeAdmin() {
-    return this.user?.permissions.indexOf(Permission.USERS_VIEW) !== -1;
+    return this.user?.permissions.indexOf(PermissionEnum.USERS_VIEW) !== -1;
+  }
+
+  get canSeeRoles() {
+    return this.user?.permissions.indexOf(PermissionEnum.ROLES_VIEW) !== -1;
   }
 
   logout() {

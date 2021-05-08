@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 
 import { AuthenticationService } from '@services/authentication.service';
 
-export enum Permission {
+export enum PermissionEnum {
   PERMISSIONS_VIEW = 'permissions:view',
 
   ROLES_ADD = 'roles:add',
@@ -34,7 +34,7 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    const routePermissions: Permission[] | undefined= route.data.permissions;
+    const routePermissions: PermissionEnum[] | undefined= route.data.permissions;
     if (routePermissions 
       && !routePermissions.some(permission => user.permissions.indexOf(permission) !== -1)
     ) {

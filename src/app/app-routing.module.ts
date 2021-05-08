@@ -4,7 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from '@app/admin/admin.component';
 import { HomeComponent } from '@app/home/home.component';
 import { LoginComponent } from '@app/login/login.component';
-import { AuthGuard, Permission } from '@app/auth.guard';
+import { RolesComponent } from '@app/roles/roles.component';
+import { AuthGuard, PermissionEnum } from '@app/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,7 +17,13 @@ const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     canActivate: [AuthGuard],
-    data: { permissions: [ Permission.PERMISSIONS_VIEW ] }
+    data: { permissions: [ PermissionEnum.PERMISSIONS_VIEW ] }
+  },
+  {
+    path: 'roles',
+    component: RolesComponent,
+    canActivate: [AuthGuard],
+    data: { permissions: [ PermissionEnum.ROLES_VIEW ] }
   },
   {
     path: 'login',

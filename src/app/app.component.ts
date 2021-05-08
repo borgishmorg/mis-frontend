@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from './authentication.service';
-import { User } from './models';
+
+import { AuthenticationService } from '@services/authentication.service';
+import { TokenUser } from '@app/models'
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { User } from './models';
 })
 export class AppComponent {
   title = 'mis-frontend';
-  user?: User;
+  user?: TokenUser;
 
   constructor(private authenticationService: AuthenticationService) {
     this.authenticationService.user.subscribe(x => this.user = x);

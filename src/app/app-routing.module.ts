@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './admin/admin.component';
-import { AuthGuard } from './auth.guard';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { Role } from './role.enum';
+
+import { AdminComponent } from '@app/admin/admin.component';
+import { HomeComponent } from '@app/home/home.component';
+import { LoginComponent } from '@app/login/login.component';
+import { AuthGuard } from '@app/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,7 +16,7 @@ const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     canActivate: [AuthGuard],
-    data: { roles: [Role.Admin] }
+    data: { roles: [] }
   },
   {
     path: 'login',

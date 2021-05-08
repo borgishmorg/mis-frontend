@@ -7,15 +7,18 @@ export interface User {
   id: number;
   login: string;
   role: Role;
-  permissions: string[];
 }
 
 export interface Users{
   users: User[];
 }
 
+export interface TokenUser extends User {
+  permissions: string[];
+}
+
 export interface Tokens{
-  user: User;
+  user: TokenUser;
   access_token: string;
   refresh_token: string;
 }

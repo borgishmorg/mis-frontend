@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { AuthenticationService } from '../authentication.service';
-import { User } from '../models';
-import { UserService } from '../user.service';
+
+import { AuthenticationService } from '@services/authentication.service';
+import { UserService } from '@services/user.service';
+import { User, TokenUser } from '@app/models';
 
 @Component({ 
   templateUrl: 'home.component.html', 
@@ -10,7 +11,7 @@ import { UserService } from '../user.service';
 })
 export class HomeComponent {
   loading = false;
-  user?: User;
+  user?: TokenUser;
   userFromApi?: User;
 
   constructor(

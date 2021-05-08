@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UserService } from './user.service';
-import { User, Tokens } from './models';
-import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
+
+import { environment } from '@enviroment';
+import { TokenUser, Tokens } from '@app/models'
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private userSubject: BehaviorSubject<User | undefined>;
-  public user: Observable<User | undefined>;
+  private userSubject: BehaviorSubject<TokenUser | undefined>;
+  public user: Observable<TokenUser | undefined>;
   public access_token?: string;
   public refresh_token?: string;
 
@@ -20,7 +21,7 @@ export class AuthenticationService {
     private router: Router,
     private http: HttpClient
   ) {
-    this.userSubject = new BehaviorSubject<User | undefined>(undefined);  
+    this.userSubject = new BehaviorSubject<TokenUser | undefined>(undefined);  
     this.user = this.userSubject.asObservable();
     const tokensString = localStorage.getItem('tokens');
     if (tokensString) {
@@ -31,7 +32,7 @@ export class AuthenticationService {
     }
   }
 
-  public get userValue(): User | undefined{
+  public get userValue(): TokenUser | undefined{
     return this.userSubject.value;
   }
 

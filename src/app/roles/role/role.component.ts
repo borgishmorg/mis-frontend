@@ -23,6 +23,7 @@ export interface PermissionsGroup {
 })
 export class RoleComponent implements OnInit {
   
+  @Input() newRole: boolean = false;
   @Input() role?: Role;
   @Input() allPermissions: Permission[] = [];
   
@@ -32,7 +33,10 @@ export class RoleComponent implements OnInit {
   name: string = "";
 
   allChecked: boolean = false;
-  permissionsGroup?: PermissionsGroup;
+  permissionsGroup: PermissionsGroup = {
+    checked: false,
+    permissions: []
+  };
 
   error = '';
 
@@ -43,7 +47,7 @@ export class RoleComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authenticationService.user.subscribe(user => this.user = user)
+    this.authenticationService.user.subscribe(user => {this.user = user})
     this.dropForm();
   }
 
@@ -68,36 +72,50 @@ export class RoleComponent implements OnInit {
   }
 
   save() {
-    if (this.role && this.permissionsGroup) {
-      this.rolesService.put(
-        this.role.code,
-        {
+    if (this.role) {
+      let observer = {
+        next: () => {this.reloadCurrentRoute()},
+        error: (error: string) => {this.error = error}
+      };
+
+      if(!this.newRole){
+        this.rolesService.put(
+          this.role.code,
+          {
+            code: this.code,
+            name: this.name,
+            permissions: this.permissionsGroup.permissions
+            .filter(permission => permission.checked)
+            .map(permission => permission.code)
+          }
+        ).pipe(first()).subscribe(observer)
+      } else {
+        this.rolesService.post({
           code: this.code,
           name: this.name,
           permissions: this.permissionsGroup.permissions
             .filter(permission => permission.checked)
             .map(permission => permission.code)
-        }
-      ).pipe(first()).subscribe({
-        next: () => {
-          this.reloadCurrentRoute();
-        },
-        error: error => {
-          this.error = error;
-        }
-      })
+        }).pipe(first()).subscribe(observer)
+      }
     }
   }
 
   delete() {
-    if (this.role) this.rolesService.delete(this.role.code).pipe(first()).subscribe({
-      next: () => {
+    if (this.role) {
+      if (!this.newRole) {
+        this.rolesService.delete(this.role.code).pipe(first()).subscribe({
+          next: () => {
+            this.reloadCurrentRoute();
+          },
+          error: error => {
+            this.error = error;
+          }
+        });
+      } else {
         this.reloadCurrentRoute();
-      },
-      error: error => {
-        this.error = error;
       }
-    });
+    }
   }
 
   hasPermission(permission: Permission): boolean {

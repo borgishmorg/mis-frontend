@@ -1,8 +1,14 @@
-<mat-accordion class="container" *ngIf="!loading">
-    <mat-expansion-panel *ngFor="let role of roles">
-        <mat-expansion-panel-header>
-            <mat-panel-title>{{role.name}}</mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-role [role]="role" [allPermissions]="permissions"></app-role>
-    </mat-expansion-panel>
-</mat-accordion>
+<section class="container" *ngIf="!loading">
+    <mat-accordion *ngIf="!newRole">
+        <mat-expansion-panel *ngFor="let role of roles">
+            <mat-expansion-panel-header>
+                <mat-panel-title>{{role.name}}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-role [role]="role" [allPermissions]="permissions"></app-role>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <div>
+        <button class="add" mat-flat-button *ngIf="canAdd && !newRole" (click)="add()">Добавить</button>
+        <app-role [role]="newRole" [allPermissions]="permissions" *ngIf="newRole" [newRole]="true"></app-role>
+    </div>
+</section>

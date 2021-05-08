@@ -22,6 +22,13 @@ export class AuthenticationService {
   ) {
     this.userSubject = new BehaviorSubject<User | undefined>(undefined);  
     this.user = this.userSubject.asObservable();
+    const tokensString = localStorage.getItem('tokens');
+    if (tokensString) {
+      const tokens: Tokens = JSON.parse(tokensString);
+      this.access_token = tokens.access_token;
+      this.refresh_token = tokens.refresh_token;
+      this.userSubject.next(tokens.user);
+    }
   }
 
   public get userValue(): User | undefined{
@@ -50,23 +57,19 @@ export class AuthenticationService {
       `${environment.apiUrl}/auth/login`, 
       params,
       httpOptions
-    ).pipe(
-      map(
-        tokens => {
-          localStorage.setItem('access_token', tokens.access_token);
-          localStorage.setItem('refresh_token', tokens.refresh_token);
-          this.access_token = tokens.access_token;
-          this.refresh_token = tokens.refresh_token;
-          this.userSubject.next(tokens.user);
-        }
-      )
-    )
+    ).pipe(map(
+      tokens => {
+        localStorage.setItem('tokens', JSON.stringify(tokens));
+        this.access_token = tokens.access_token;
+        this.refresh_token = tokens.refresh_token;
+        this.userSubject.next(tokens.user);
+        return tokens;
+      }
+    ));
   }
 
   logout() {
-    //remove user from local storage to log user out
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('tokens');
     this.userSubject.next(undefined);
     this.router.navigate(['/login'])
   }

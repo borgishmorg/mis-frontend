@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { AuthenticationService } from '@services/authentication.service';
 import { TokenUser } from '@app/models'
+import { Permission } from '@app/auth.guard'
 
 @Component({
   selector: 'app-root',
@@ -12,12 +13,14 @@ export class AppComponent {
   title = 'mis-frontend';
   user?: TokenUser;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(
+    private authenticationService: AuthenticationService
+  ) {
     this.authenticationService.user.subscribe(x => this.user = x);
   }
 
-  get isAdmin() {
-    return this.user && this.user.role.code === 'admin';
+  get canSeeAdmin() {
+    return this.user?.permissions.indexOf(Permission.USERS_VIEW) !== -1;
   }
 
   logout() {

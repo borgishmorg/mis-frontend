@@ -1,6 +1,11 @@
 <mat-toolbar *ngIf="user">
     <a mat-button class="nav-link" routerLink="/"><h1>МИС</h1></a>
-    <a mat-raised-button color="primary" class="nav-link" routerLink="/admin" *ngIf="isAdmin">Admin</a>
+    <a mat-raised-button 
+        color="primary" 
+        class="nav-link" 
+        routerLink="/admin" 
+        *ngIf="canSeeAdmin"
+        >Admin</a>
     <span class="example-spacer"></span>
     <a mat-raised-button color="warn" class="nav-logout" (click)="logout()">Logout</a>
 </mat-toolbar>

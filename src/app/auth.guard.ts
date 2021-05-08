@@ -1,8 +1,19 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
 import { AuthenticationService } from '@services/authentication.service';
+
+export enum Permission {
+  PERMISSIONS_VIEW = 'permissions:view',
+
+  ROLES_ADD = 'roles:add',
+  ROLES_EDIT = 'roles:edit',
+  ROLES_VIEW = 'roles:view',
+  
+  USERS_ADD = 'users:add',
+  USERS_EDIT = 'users:edit',
+  USERS_VIEW = 'users:view',
+}
 
 @Injectable({
   providedIn: 'root'
@@ -15,23 +26,21 @@ export class AuthGuard implements CanActivate {
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot
+  ): boolean {
     const user = this.authenticationService.userValue;
-
-    if (user) {
-      // check if route is restricted by role
-      // if (route.data.roles && route.data.roles.indexOf(user.role) === -1) {
-      //   // role not authorised so redirect to home page
-      //   this.router.navigate(['/']);
-      //   return false;
-      // }
-      // authorised so return true
-      return true;
+    if (!user) {
+      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+      return false;
     }
 
-    // not logged in so redirect to login page with the return url
-    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-    return false;
-  }
-  
+    const routePermissions: Permission[] | undefined= route.data.permissions;
+    if (routePermissions 
+      && !routePermissions.some(permission => user.permissions.indexOf(permission) !== -1)
+    ) {
+      this.router.navigate(['/']);
+      return false;
+    }
+    return true;
+  }  
 }

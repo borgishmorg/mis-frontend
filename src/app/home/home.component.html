@@ -1,13 +1,10 @@
-<div class="card mt-4">
-    <h4 class="card-header">Home</h4>
-    <div class="card-body" *ngIf="user">
-        <p>You're logged in with Angular 10 & JWT!!</p>
-        <p>Your role is: <strong>{{user.role.name}}</strong>.</p>
-        <p>This page can be accessed by <u>all authenticated users</u>.</p>
-        <p class="mb-1">Current user from secure api end point:</p>
-        <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-        <ul *ngIf="userFromApi">
-            <li>{{userFromApi.login}} {{userFromApi.role.name}}</li>
-        </ul>
-    </div>
+<div class="container">
+    <mat-spinner *ngIf="loading"></mat-spinner>
+    <mat-card *ngIf="userFromApi">
+        <mat-card-title>Добро пожаловать в МИС</mat-card-title>
+        <mat-card-content>
+            <p>Ваш логин: <strong>{{userFromApi.login}}</strong>.</p>
+            <p>Ваша должность: <strong>{{userFromApi.role.name}}</strong>.</p>
+        </mat-card-content>
+    </mat-card>
 </div>

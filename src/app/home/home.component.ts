@@ -11,7 +11,6 @@ import { User, TokenUser } from '@app/models';
 })
 export class HomeComponent {
   loading = false;
-  user?: TokenUser;
   userFromApi?: User;
 
   constructor(
@@ -19,9 +18,10 @@ export class HomeComponent {
     private authenticationService: AuthenticationService
   ) {
     if (this.authenticationService.userValue){
-      this.user = this.authenticationService.userValue;
       this.loading = true;
-      this.userService.get(this.user.id).pipe(first()).subscribe(user => {
+      this.userService.get(
+        this.authenticationService.userValue.id
+      ).pipe(first()).subscribe(user => {
         this.loading = false;
         this.userFromApi = user;
       });

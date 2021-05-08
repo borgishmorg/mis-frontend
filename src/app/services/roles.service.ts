@@ -10,6 +10,12 @@ export interface Role {
   permissions: Permission[];
 }
 
+export interface RolePost {
+  code: string;
+  name: string;
+  permissions: string[];
+}
+
 export interface Roles {
   roles: Role[];
 }
@@ -29,11 +35,15 @@ export class RolesService {
     return this.http.get<Roles>(`${environment.apiUrl}/roles`);
   }
   
-  post(code: string, role: Role) {
-    return this.http.post(`${environment.apiUrl}/roles/${code}`, role);
+  post(role: RolePost) {
+    return this.http.post(`${environment.apiUrl}/roles`, role);
   }
   
-  put(code: string, role: Role) {
+  put(code: string, role: RolePost) {
     return this.http.put(`${environment.apiUrl}/roles/${code}`, role);
+  }
+  
+  delete(code: string) {
+    return this.http.delete(`${environment.apiUrl}/roles/${code}`);
   }
 }

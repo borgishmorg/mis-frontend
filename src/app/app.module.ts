@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './jwt.interceptor';
 import { ErrorInterceptor } from './error.interceptor';
@@ -20,7 +20,8 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RolesComponent } from './roles/roles.component'
 import { MatExpansionModule } from '@angular/material/expansion'
-import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { RoleComponent } from './roles/role/role.component'
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
 	AdminComponent,
 	HomeComponent,
 	LoginComponent,
-    RolesComponent
+    RolesComponent,
+    RoleComponent
   ],
   imports: [
 	BrowserModule,
@@ -44,7 +46,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
 	MatIconModule,
 	MatProgressSpinnerModule,
 	MatExpansionModule,
-	MatCheckboxModule
+	MatCheckboxModule,
+	FormsModule
   ],
   providers: [
 	{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

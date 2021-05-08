@@ -3,21 +3,6 @@
         <mat-expansion-panel-header>
             <mat-panel-title>{{role.name}}</mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Разрешения</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <div *ngFor="let permission of permissions">
-                    <mat-checkbox 
-                        [checked]="checkPermission(permission, role.permissions)"
-                        [disabled]="!canEdit"
-                    >{{permission.name}}</mat-checkbox>
-                </div>
-            </mat-card-content>
-            <mat-card-actions>
-
-            </mat-card-actions>
-        </mat-card>
+        <app-role [role]="role" [allPermissions]="permissions"></app-role>
     </mat-expansion-panel>
 </mat-accordion>

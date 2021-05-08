@@ -29,12 +29,4 @@ export class RolesComponent implements OnInit {
     this.authenticationService.user.subscribe(user => this.user = user)
     this.loading = false;
   }
-
-  checkPermission(permission: Permission, permissions: Permission[]): boolean {
-    return permissions.some(p => p.code === permission.code)
-  }
-
-  get canEdit() {
-    return this.user?.permissions.includes(PermissionEnum.ROLES_EDIT);
-  }
 }

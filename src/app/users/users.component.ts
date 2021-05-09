@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService, TokenUser } from '@app/services/authentication.service';
-import { UserService, User } from '@app/services/user.service';
+import { UserService, User, UserPost } from '@app/services/user.service';
 import { EditedUser } from './user/user.component';
+import { PermissionEnum } from '@app/auth.guard';
 
 @Component({
   selector: 'app-users',
@@ -16,6 +17,7 @@ export class UsersComponent implements OnInit {
 
   private user?: TokenUser;
 
+  newUser?: User; 
   users: User[] = [];
 
   error: string = "";
@@ -35,6 +37,21 @@ export class UsersComponent implements OnInit {
     )
   }
 
+  get canAdd() {
+    return !!this.user?.permissions.includes(PermissionEnum.USERS_ADD);
+  }
+
+  add() {
+    this.newUser = {
+      id: 0,
+      login: "login",
+      role: {
+        code: "admin",
+        name: ""
+      }
+    }
+  }
+
   onEdit(user: EditedUser) {
     let observer = {
       next: () => {
@@ -43,7 +60,7 @@ export class UsersComponent implements OnInit {
           users => {
             this.users = users.users;
             this.loading = false;
-            // this.newRole = undefined;
+            this.newUser = undefined;
           }
         );
       },
@@ -52,43 +69,37 @@ export class UsersComponent implements OnInit {
       }
     };
 
-    this.userService.put(user.id, {
-      ...user,
-      role: user.role.code
-    }).pipe(first()).subscribe(observer);
-    
-    /*
-    if(!this.newRole){
-      this.rolesService.put(
-        editedRole.oldCode,
-        {
-          ...editedRole,
-          permissions: editedRole.permissions.map(permission => permission.code)
-        }
-      ).pipe(first()).subscribe(observer)
+    if (!this.newUser) {
+      this.userService.put(user.id, {
+        ...user,
+        role: user.role.code
+      }).pipe(first()).subscribe(observer);
     } else {
-      this.rolesService.post({
-        ...editedRole,
-        permissions: editedRole.permissions.map(permission => permission.code)
-      }).pipe(first()).subscribe(observer)
+      this.userService.post({
+        ...user,
+        role: user.role.code
+      }).pipe(first()).subscribe(observer);
     }
-    */
   }
 
   onDelete(deletedUser: User) {
-    this.userService.delete(deletedUser.id).pipe(first()).subscribe({
-      next: () => {
-        this.loading = true;
-        this.userService.getAll().pipe(first()).subscribe(
-          users => {
-            this.users = users.users;
-            this.loading = false;
-          }
-        )
-      },
-      error: error => {
-        this.error = error;
-      }
-    });
+    if (!this.newUser) {
+      this.userService.delete(deletedUser.id).pipe(first()).subscribe({
+        next: () => {
+          this.loading = true;
+          this.userService.getAll().pipe(first()).subscribe(
+            users => {
+              this.users = users.users;
+              this.loading = false;
+            }
+          )
+        },
+        error: error => {
+          this.error = error;
+        }
+      });
+    } else {
+      this.newUser = undefined;
+    }
   }
 }

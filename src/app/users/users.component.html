@@ -1,5 +1,5 @@
 <div class="container" *ngIf="!loading">
-    <mat-accordion>
+    <mat-accordion *ngIf="!newUser">
         <mat-expansion-panel *ngFor="let user of users">
             <mat-expansion-panel-header>
                 <mat-panel-title>{{user.login}}</mat-panel-title>
@@ -11,4 +11,19 @@
             ></app-user>
         </mat-expansion-panel>
     </mat-accordion>
+    <div>
+        <button 
+        mat-flat-button 
+        class="add" 
+        *ngIf="canAdd && !newUser" 
+        (click)="add()"
+        >Добавить</button>
+        <app-user 
+        *ngIf="newUser"
+        [user]="newUser" 
+        [passwordRequired]="true"
+        (editedUser)="onEdit($event)"
+        (deletedUser)="onDelete($event)"
+        ></app-user>
+    </div>
 </div>

@@ -22,7 +22,7 @@
                 <mat-label>Пароль:</mat-label>
                 <input matInput 
                 type="text"
-                [required]="passwordRequired"
+                [required]="!!passwordRequired"
                 pattern="[a-zA-Z]+"
                 [disabled]="!canEdit"
                 [(ngModel)]="password"/>

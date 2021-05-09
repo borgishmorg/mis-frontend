@@ -17,7 +17,8 @@ export interface EditedUser extends User{
 export class UserComponent implements OnInit, OnDestroy {
 
   @Input() user?: User;
-  @Input() passwordRequired: boolean = false;
+  @Input() passwordRequired?: boolean;
+
   oldUser?: User;
   password: string = "";
 

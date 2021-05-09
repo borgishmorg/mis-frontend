@@ -35,25 +35,29 @@ export class UsersComponent implements OnInit {
     )
   }
 
-  onEdit(editedUser: EditedUser) {
-    /*
+  onEdit(user: EditedUser) {
     let observer = {
       next: () => {
         this.loading = true;
-        this.rolesService
-          .getAll()
-          .pipe(first())
-          .subscribe(roles => {
-            this.roles = roles.roles;
+        this.userService.getAll().pipe(first()).subscribe(
+          users => {
+            this.users = users.users;
             this.loading = false;
-            this.newRole = undefined;
-          });
+            // this.newRole = undefined;
+          }
+        );
       },
       error: (error: string) => {
         this.error = error;
       }
     };
 
+    this.userService.put(user.id, {
+      ...user,
+      role: user.role.code
+    }).pipe(first()).subscribe(observer);
+    
+    /*
     if(!this.newRole){
       this.rolesService.put(
         editedRole.oldCode,

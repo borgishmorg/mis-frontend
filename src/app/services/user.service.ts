@@ -11,6 +11,7 @@ export interface UserRole {
 export interface User {
   id: number;
   login: string;
+  password?: string;
   role: UserRole;
 }
 
@@ -40,11 +41,11 @@ export class UserService {
   }
 
   post(user: UserPost) {
-
+    return this.http.post<User>(`${environment.apiUrl}/users`, user);
   }
-
-  put(id: number, user: UserPost) {
-    
+  
+  put(id: number, user: UserPost) {    
+    return this.http.put<User>(`${environment.apiUrl}/users/${id}`, user);
   }
 
   delete(id: number) {

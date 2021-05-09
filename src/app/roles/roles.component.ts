@@ -14,6 +14,8 @@ import { first } from 'rxjs/operators';
 export class RolesComponent implements OnInit {
 
   loading: boolean = true;
+  private waitCount: number = 3;
+
   user?: TokenUser;
   roles: Role[] = [];
   permissions: Permission[] = [];
@@ -31,24 +33,26 @@ export class RolesComponent implements OnInit {
       .getAll()
       .pipe(first())
       .subscribe(permissions => {
-        this.permissions = permissions.permissions
+        this.permissions = permissions.permissions;
+        this.loading = !!--this.waitCount;
       })
     this.rolesService
       .getAll()
       .pipe(first())
       .subscribe(roles => {
-        this.roles = roles.roles
+        this.roles = roles.roles;
+        this.loading = !!--this.waitCount;
       })
     this.authenticationService.user
       .pipe(first())
       .subscribe(user => {
-        this.user = user
+        this.user = user;
+        this.loading = !!--this.waitCount;
     })
-    this.loading = false;
   }
   
   get canAdd() {
-    return this.user?.permissions.includes(PermissionEnum.ROLES_ADD);
+    return !!this.user?.permissions.includes(PermissionEnum.ROLES_ADD);
   }
 
   add() {

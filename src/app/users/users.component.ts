@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TokenUser, User } from '@app/models';
-import { AuthenticationService } from '@app/services/authentication.service';
-import { UserService } from '@app/services/user.service';
 import { first } from 'rxjs/operators';
+
+import { AuthenticationService, TokenUser } from '@app/services/authentication.service';
+import { UserService, User } from '@app/services/user.service';
 import { EditedUser } from './user/user.component';
 
 @Component({

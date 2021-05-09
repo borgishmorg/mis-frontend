@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
-import { PermissionEnum } from '@app/auth.guard';
-import { TokenUser } from '@app/models';
-import { AuthenticationService } from '@app/services/authentication.service';
+import { Subscription } from 'rxjs';
+
+import { AuthenticationService, TokenUser } from '@app/services/authentication.service';
 import { Permission } from '@app/services/permissions.service';
 import { Role } from '@app/services/roles.service';
-import { Subscription } from 'rxjs';
+import { PermissionEnum } from '@app/auth.guard';
 
 export interface EditedRole extends Role {
   oldCode: string;

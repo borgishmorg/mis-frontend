@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { PermissionEnum } from '@app/auth.guard';
-import { TokenUser, User } from '@app/models';
-import { AuthenticationService } from '@app/services/authentication.service';
 import { Subscription } from 'rxjs';
+
+import { AuthenticationService, TokenUser } from '@services/authentication.service';
+import { PermissionEnum } from '@app/auth.guard';
+import { User } from '@services/user.service';
 
 export interface EditedUser extends User{
   password?: string

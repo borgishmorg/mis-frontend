@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PermissionEnum } from '@app/auth.guard';
-import { TokenUser } from '@app/models';
-import { AuthenticationService } from '@app/services/authentication.service';
-import { Permission, PermissionsService } from '@app/services/permissions.service';
-import { Role, RolesService } from '@app/services/roles.service';
 import { first } from 'rxjs/operators';
+
+import { Permission, PermissionsService } from '@app/services/permissions.service';
+import { AuthenticationService, TokenUser } from '@app/services/authentication.service';
+import { Role, RolesService } from '@app/services/roles.service';
+import { PermissionEnum } from '@app/auth.guard';
 import { EditedRole } from './role/role.component';
 
 @Component({

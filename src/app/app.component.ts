@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
-import { AuthenticationService } from '@services/authentication.service';
-import { TokenUser } from '@app/models'
+import { AuthenticationService, TokenUser } from '@services/authentication.service';
 import { PermissionEnum } from '@app/auth.guard'
 
 @Component({

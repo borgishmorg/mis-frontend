@@ -5,8 +5,17 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@enviroment';
-import { TokenUser, Tokens } from '@app/models'
+import { User } from '@services/user.service';
 
+export interface TokenUser extends User {
+  permissions: string[];
+}
+
+export interface Tokens{
+  user: TokenUser;
+  access_token: string;
+  refresh_token: string;
+}
 
 @Injectable({
   providedIn: 'root'

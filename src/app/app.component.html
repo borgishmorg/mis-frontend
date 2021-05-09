@@ -3,9 +3,15 @@
     <a mat-raised-button 
         color="primary" 
         class="nav-link" 
-        routerLink="/admin" 
-        *ngIf="canSeeAdmin"
-        >Admin</a>
+        routerLink="" 
+        *ngIf="true"
+        >Пациенты</a>
+    <a mat-raised-button 
+        color="primary" 
+        class="nav-link" 
+        routerLink="/users" 
+        *ngIf="canSeeUsers"
+        >Сотрудники</a>
     <a mat-raised-button 
         color="primary" 
         class="nav-link" 
@@ -13,7 +19,7 @@
         *ngIf="canSeeRoles"
         >Роли</a>
     <span class="example-spacer"></span>
-    <a mat-raised-button color="warn" class="nav-logout" (click)="logout()">Logout</a>
+    <a mat-raised-button color="warn" class="nav-logout" (click)="logout()">Выйти</a>
 </mat-toolbar>
 <div>
     <router-outlet></router-outlet>

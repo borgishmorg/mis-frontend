@@ -27,6 +27,10 @@ export class AppComponent {
     return this.user?.permissions.indexOf(PermissionEnum.ROLES_VIEW) !== -1;
   }
 
+  get canSeeUsers() {
+    return this.user?.permissions.indexOf(PermissionEnum.USERS_VIEW) !== -1;
+  }
+
   logout() {
     this.authenticationService.logout();
   }

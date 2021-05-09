@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AdminComponent } from '@app/admin/admin.component';
 import { HomeComponent } from '@app/home/home.component';
 import { LoginComponent } from '@app/login/login.component';
 import { RolesComponent } from '@app/roles/roles.component';
 import { AuthGuard, PermissionEnum } from '@app/auth.guard';
+import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   {
@@ -14,16 +14,16 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'admin',
-    component: AdminComponent,
-    canActivate: [AuthGuard],
-    data: { permissions: [ PermissionEnum.PERMISSIONS_VIEW ] }
-  },
-  {
     path: 'roles',
     component: RolesComponent,
     canActivate: [AuthGuard],
     data: { permissions: [ PermissionEnum.ROLES_VIEW ] }
+  },
+  {
+    path: 'users',
+    component: UsersComponent,
+    canActivate: [AuthGuard],
+    data: { permissions: [ PermissionEnum.USERS_VIEW ] }
   },
   {
     path: 'login',

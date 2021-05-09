@@ -6,11 +6,9 @@ import { AuthenticationService } from '@services/authentication.service';
 export enum PermissionEnum {
   PERMISSIONS_VIEW = 'permissions:view',
 
-  ROLES_ADD = 'roles:add',
   ROLES_EDIT = 'roles:edit',
   ROLES_VIEW = 'roles:view',
-  
-  USERS_ADD = 'users:add',
+
   USERS_EDIT = 'users:edit',
   USERS_VIEW = 'users:view',
 }

@@ -51,10 +51,6 @@ export class UserComponent implements OnInit, OnDestroy {
     }
   }
 
-  get canAdd() {
-    return this.tokenUser?.permissions.includes(PermissionEnum.USERS_ADD);
-  }
-
   get canEdit() {
     return this.tokenUser?.permissions.includes(PermissionEnum.USERS_EDIT);
   }

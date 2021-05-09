@@ -49,8 +49,8 @@ export class RolesComponent implements OnInit {
     this.authenticationService.user.subscribe(user => { this.user = user; });
   }
   
-  get canAdd() {
-    return !!this.user?.permissions.includes(PermissionEnum.ROLES_ADD);
+  get canEdit() {
+    return !!this.user?.permissions.includes(PermissionEnum.ROLES_EDIT);
   }
 
   add() {

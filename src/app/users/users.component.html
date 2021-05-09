@@ -13,7 +13,7 @@
         </mat-expansion-panel>
     </mat-accordion>
     <div>
-        <button mat-flat-button class="add" *ngIf="canAdd && !newUser" (click)="add()">Добавить</button>
+        <button mat-flat-button class="add" *ngIf="canEdit && !newUser" (click)="add()">Добавить</button>
         <app-user 
         *ngIf="newUser"
         [user]="newUser" 

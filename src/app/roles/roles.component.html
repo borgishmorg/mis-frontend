@@ -13,7 +13,7 @@
         </mat-expansion-panel>
     </mat-accordion>
     <div>
-        <button class="add" mat-flat-button *ngIf="canAdd && !newRole" (click)="add()">Добавить</button>
+        <button class="add" mat-flat-button *ngIf="canEdit && !newRole" (click)="add()">Добавить</button>
         <app-role 
         [role]="newRole" 
         [allPermissions]="permissions" 

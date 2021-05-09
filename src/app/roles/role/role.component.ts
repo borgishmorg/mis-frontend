@@ -107,10 +107,6 @@ export class RoleComponent implements OnInit, OnDestroy {
     return !!this.role?.permissions.some(p => p.code === permission.code)
   }
 
-  get canAdd() {
-    return this.user?.permissions.includes(PermissionEnum.ROLES_ADD);
-  }
-
   get canEdit() {
     return this.user?.permissions.includes(PermissionEnum.ROLES_EDIT);
   }

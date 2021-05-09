@@ -40,7 +40,7 @@
     <mat-card-actions>
         <button mat-button color="accent" *ngIf="canEdit" (click)="save()">Сохранить</button>
         <button mat-button *ngIf="canEdit" (click)="dropForm()">Сбросить</button>
-        <button mat-button color="warn" *ngIf="canAdd" (click)="delete()">Удалить</button>
+        <button mat-button color="warn" *ngIf="canEdit" (click)="delete()">Удалить</button>
         <p style="color: red;" *ngIf="error">{{error}}</p>
     </mat-card-actions>
 </mat-card>

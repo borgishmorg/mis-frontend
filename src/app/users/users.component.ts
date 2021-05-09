@@ -48,8 +48,8 @@ export class UsersComponent implements OnInit {
     )
   }
 
-  get canAdd() {
-    return !!this.user?.permissions.includes(PermissionEnum.USERS_ADD);
+  get canEdit() {
+    return !!this.user?.permissions.includes(PermissionEnum.USERS_EDIT);
   }
 
   add() {

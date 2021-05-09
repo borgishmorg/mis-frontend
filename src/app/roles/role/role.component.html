@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="role">
     <mat-card-header>
 
     </mat-card-header>
@@ -10,7 +10,7 @@
                 type="text" 
                 required=True
                 [disabled]="!canEdit"
-                [(ngModel)]="name"/>
+                [(ngModel)]="role.name"/>
             </mat-form-field>
             <mat-form-field class="text-input">
                 <mat-label>Код:</mat-label>
@@ -19,7 +19,7 @@
                 required=True
                 pattern="[a-zA-Z]+"
                 [disabled]="!canEdit"
-                [(ngModel)]="code"/>
+                [(ngModel)]="role.code"/>
             </mat-form-field>
         </section>
         <section>

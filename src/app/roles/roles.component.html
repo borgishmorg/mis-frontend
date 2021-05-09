@@ -4,11 +4,22 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>{{role.name}}</mat-panel-title>
             </mat-expansion-panel-header>
-            <app-role [role]="role" [allPermissions]="permissions"></app-role>
+            <app-role 
+            [role]="role" 
+            [allPermissions]="permissions"
+            (editedRole)="onEdit($event)"
+            (deletedRole)="onDelete($event)"
+            ></app-role>
         </mat-expansion-panel>
     </mat-accordion>
     <div>
         <button class="add" mat-flat-button *ngIf="canAdd && !newRole" (click)="add()">Добавить</button>
-        <app-role [role]="newRole" [allPermissions]="permissions" *ngIf="newRole" [newRole]="true"></app-role>
+        <app-role 
+        [role]="newRole" 
+        [allPermissions]="permissions" 
+        *ngIf="newRole"
+        (editedRole)="onEdit($event)"
+        (deletedRole)="onDelete($event)"
+        ></app-role>
     </div>
 </section>

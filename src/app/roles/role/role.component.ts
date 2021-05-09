@@ -1,11 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { PermissionEnum } from '@app/auth.guard';
 import { TokenUser } from '@app/models';
 import { AuthenticationService } from '@app/services/authentication.service';
 import { Permission } from '@app/services/permissions.service';
-import { Role, RolesService } from '@app/services/roles.service';
-import { first } from 'rxjs/operators';
+import { Role } from '@app/services/roles.service';
+import { Subscription } from 'rxjs';
+
+export interface EditedRole extends Role {
+  oldCode: string;
+}
 
 export interface PermissionChecked extends Permission {
   checked: boolean;
@@ -21,16 +24,17 @@ export interface PermissionsGroup {
   templateUrl: './role.component.html',
   styleUrls: ['./role.component.css']
 })
-export class RoleComponent implements OnInit {
+export class RoleComponent implements OnInit, OnDestroy {
   
-  @Input() newRole: boolean = false;
   @Input() role?: Role;
+  oldRole?: Role;
   @Input() allPermissions: Permission[] = [];
   
-  user?: TokenUser;
+  @Output() editedRole = new EventEmitter<EditedRole>();
+  @Output() deletedRole = new EventEmitter<EditedRole>();
 
-  code: string = "";
-  name: string = "";
+  user?: TokenUser;
+  userSubscription?: Subscription;
 
   allChecked: boolean = false;
   permissionsGroup: PermissionsGroup = {
@@ -41,14 +45,26 @@ export class RoleComponent implements OnInit {
   error = '';
 
   constructor(
-    private authenticationService: AuthenticationService,
-    private rolesService: RolesService,
-    private router: Router
+    private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
-    this.authenticationService.user.subscribe(user => {this.user = user})
+    if (this.role) {
+      this.oldRole = {
+        code: this.role.code,
+        name: this.role.name,
+        permissions: this.role.permissions
+      }
+    }
+    
+    this.userSubscription = this.authenticationService.user.subscribe(user => {this.user = user});
     this.dropForm();
+  }
+
+  ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   dropForm() {
@@ -62,59 +78,28 @@ export class RoleComponent implements OnInit {
         }
       })
     }
-    if (this.role) {
-      this.code = this.role.code;
-      this.name = this.role.name;
-    }
+    Object.assign(this.role, this.oldRole);
     this.permissionsGroup.checked = this.permissionsGroup.permissions.every(p => p.checked);
     this.allChecked = this.permissionsGroup.checked;
     this.error = '';
   }
 
   save() {
-    if (this.role) {
-      let observer = {
-        next: () => {this.reloadCurrentRoute()},
-        error: (error: string) => {this.error = error}
-      };
-
-      if(!this.newRole){
-        this.rolesService.put(
-          this.role.code,
-          {
-            code: this.code,
-            name: this.name,
-            permissions: this.permissionsGroup.permissions
-            .filter(permission => permission.checked)
-            .map(permission => permission.code)
-          }
-        ).pipe(first()).subscribe(observer)
-      } else {
-        this.rolesService.post({
-          code: this.code,
-          name: this.name,
-          permissions: this.permissionsGroup.permissions
-            .filter(permission => permission.checked)
-            .map(permission => permission.code)
-        }).pipe(first()).subscribe(observer)
-      }
+    if (this.role && this.oldRole) {
+      this.editedRole.emit({
+        ...this.role,
+        oldCode: this.oldRole.code,
+        permissions: this.permissionsGroup.permissions.filter(permission => permission.checked)
+      });
     }
   }
 
   delete() {
-    if (this.role) {
-      if (!this.newRole) {
-        this.rolesService.delete(this.role.code).pipe(first()).subscribe({
-          next: () => {
-            this.reloadCurrentRoute();
-          },
-          error: error => {
-            this.error = error;
-          }
-        });
-      } else {
-        this.reloadCurrentRoute();
-      }
+    if (this.role && this.oldRole) {
+      this.deletedRole.emit({
+        oldCode: this.oldRole.code,
+        ...this.role
+      });
     }
   }
 
@@ -145,12 +130,5 @@ export class RoleComponent implements OnInit {
       return;
     }
     this.permissionsGroup.permissions.forEach(p => p.checked = status);
-  }
-
-  reloadCurrentRoute() {
-    let currentUrl = this.router.url;
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-        this.router.navigate([currentUrl]);
-    });
   }
 }

@@ -3,9 +3,8 @@
         <mat-card-title>МИС</mat-card-title>        
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="standard">
-                <mat-label for="username">Username</mat-label>
+                <mat-label>Логин</mat-label>
                 <input matInput 
-                    id="username" 
                     type="text" 
                     formControlName="username" 
                     [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
@@ -14,11 +13,10 @@
                 <mat-hint *ngIf="submitted && f.username.errors && f.username.errors.required">Username is required</mat-hint>
             </mat-form-field>
             <mat-form-field appearance="standard">
-                <mat-label for="password">Password</mat-label>
-                <input matInput 
-                    id="password" 
-                    [type]="hidePassword ? 'password' : 'text'"
-                    formControlName="password" 
+                <mat-label>Пароль</mat-label>
+                <input matInput  
+                [type]="hidePassword ? 'password' : 'text'"
+                    formControlName="password"
                     [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
                     placeholder=""
                 />
@@ -29,7 +27,7 @@
             </mat-form-field>
             <button mat-raised-button type="submit" color="primary" [disabled]="loading">
                 <mat-spinner diameter="37" *ngIf="loading"></mat-spinner>
-                <span *ngIf="!loading">Login</span>
+                <span *ngIf="!loading">Войти</span>
             </button>
         </form>
         <p style="color: red;" *ngIf="error">{{error}}</p>

@@ -6,21 +6,18 @@
             </mat-expansion-panel-header>
             <app-user 
             [user]="user"
+            [roles]="roles"
             (editedUser)="onEdit($event)"
             (deletedUser)="onDelete($event)"
             ></app-user>
         </mat-expansion-panel>
     </mat-accordion>
     <div>
-        <button 
-        mat-flat-button 
-        class="add" 
-        *ngIf="canAdd && !newUser" 
-        (click)="add()"
-        >Добавить</button>
+        <button mat-flat-button class="add" *ngIf="canAdd && !newUser" (click)="add()">Добавить</button>
         <app-user 
         *ngIf="newUser"
         [user]="newUser" 
+        [roles]="roles"
         [passwordRequired]="true"
         (editedUser)="onEdit($event)"
         (deletedUser)="onDelete($event)"

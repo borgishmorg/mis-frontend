@@ -5,6 +5,7 @@ import { AuthenticationService, TokenUser } from '@app/services/authentication.s
 import { UserService, User, UserPost } from '@app/services/user.service';
 import { EditedUser } from './user/user.component';
 import { PermissionEnum } from '@app/auth.guard';
+import { Role, RolesService } from '@app/services/roles.service';
 
 @Component({
   selector: 'app-users',
@@ -14,17 +15,21 @@ import { PermissionEnum } from '@app/auth.guard';
 export class UsersComponent implements OnInit {
 
   loading: boolean = true;
+  waitCount: number = 2;
 
   private user?: TokenUser;
 
   newUser?: User; 
   users: User[] = [];
 
+  roles: Role[] = [];
+
   error: string = "";
 
   constructor(
     private userService: UserService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private rolesService: RolesService
   ) { }
 
   ngOnInit(): void {
@@ -32,7 +37,13 @@ export class UsersComponent implements OnInit {
     this.userService.getAll().pipe(first()).subscribe(
       users => {
         this.users = users.users;
-        this.loading = false;
+        this.loading = !!--this.waitCount;
+      }
+    )
+    this.rolesService.getAll().pipe(first()).subscribe(
+      roles => {
+        this.roles = roles.roles;
+        this.loading = !!--this.waitCount;
       }
     )
   }

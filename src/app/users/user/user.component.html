@@ -27,6 +27,14 @@
                 [disabled]="!canEdit"
                 [(ngModel)]="password"/>
             </mat-form-field>
+            <mat-form-field class="input-field">
+                <mat-label>Роль:</mat-label>
+                <mat-select [(ngModel)]="selectedRole" name="role" [disabled]="!canEdit">
+                  <mat-option *ngFor="let role of roles" [value]="role.code">
+                    {{role.name}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
         </section>
     </mat-card-content>
     <mat-card-actions>

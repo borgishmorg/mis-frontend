@@ -6,6 +6,7 @@ import { AuthenticationService, TokenUser } from '@app/services/authentication.s
 import { Role, RolesService } from '@app/services/roles.service';
 import { PermissionEnum } from '@app/auth.guard';
 import { EditedRole } from './role/role.component';
+import { LoadingService } from '@app/loading.service';
 
 @Component({
   selector: 'app-roles',
@@ -28,23 +29,33 @@ export class RolesComponent implements OnInit {
   constructor(
     private rolesService: RolesService,
     private permissionsService: PermissionsService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
+    this.loadingService.startLoading();
     this.permissionsService
       .getAll()
       .pipe(first())
       .subscribe(permissions => {
         this.permissions = permissions.permissions;
-        this.loading = !!--this.waitCount;
+        this.waitCount--;
+        if (this.waitCount === 0) {
+          this.loading = false;
+          this.loadingService.stopLoading();
+        }
       });
     this.rolesService
       .getAll()
       .pipe(first())
       .subscribe(roles => {
         this.roles = roles.roles;
-        this.loading = !!--this.waitCount;
+        this.waitCount--;
+        if (this.waitCount === 0) {
+          this.loading = false;
+          this.loadingService.stopLoading();
+        }
       });
     this.authenticationService.user.subscribe(user => { this.user = user; });
   }
@@ -64,15 +75,22 @@ export class RolesComponent implements OnInit {
   onEdit(editedRole: EditedRole) {
     let observer = {
       next: () => {
-        this.loading = true;
+        this.loadingService.startLoading();
         this.rolesService
           .getAll()
           .pipe(first())
-          .subscribe(roles => {
-            this.roles = roles.roles;
-            this.loading = false;
-            this.newRole = undefined;
-          });
+          .subscribe({
+            next: roles => {
+              this.roles = roles.roles;
+              this.newRole = undefined;
+              this.loadingService.stopLoading();
+            },
+            error: error => {
+              this.loadingService.stopLoading();
+              this.error = error;
+            }
+          }
+        );
       },
       error: (error: string) => {
         this.error = error;
@@ -99,14 +117,21 @@ export class RolesComponent implements OnInit {
     if (!this.newRole) {
       this.rolesService.delete(deletedRole.oldCode).pipe(first()).subscribe({
         next: () => {
-          this.loading = true;
+          this.loadingService.startLoading();
           this.rolesService
             .getAll()
             .pipe(first())
-            .subscribe(roles => {
-              this.roles = roles.roles;
-              this.loading = false;
-            });
+            .subscribe({
+              next: roles => {
+                this.roles = roles.roles;
+                this.loadingService.stopLoading();
+              },
+              error: error => {
+                this.loadingService.stopLoading();
+                this.error = error;
+              }
+            }
+          );
         },
         error: error => {
           this.error = error;

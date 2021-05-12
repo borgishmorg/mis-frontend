@@ -1,4 +1,4 @@
-<mat-toolbar *ngIf="user">
+<mat-toolbar class="app-nav" *ngIf="user">
     <a mat-button class="nav-link" routerLink="/"><h1>МИС</h1></a>
     <a mat-raised-button 
         color="primary" 
@@ -22,5 +22,6 @@
     <a mat-raised-button color="warn" class="nav-logout" (click)="logout()">Выйти</a>
 </mat-toolbar>
 <div>
+    <app-loading class="app-loading"></app-loading>
     <router-outlet></router-outlet>
 </div>

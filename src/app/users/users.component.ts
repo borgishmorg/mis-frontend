@@ -6,6 +6,7 @@ import { UserService, User, UserPost } from '@app/services/user.service';
 import { EditedUser } from './user/user.component';
 import { PermissionEnum } from '@app/auth.guard';
 import { Role, RolesService } from '@app/services/roles.service';
+import { LoadingService } from '@app/loading.service';
 
 @Component({
   selector: 'app-users',
@@ -29,21 +30,31 @@ export class UsersComponent implements OnInit {
   constructor(
     private userService: UserService,
     private authService: AuthenticationService,
-    private rolesService: RolesService
+    private rolesService: RolesService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
+    this.loadingService.startLoading();
     this.authService.user.subscribe(u => {this.user = u});
     this.userService.getAll().pipe(first()).subscribe(
       users => {
         this.users = users.users;
-        this.loading = !!--this.waitCount;
+        this.waitCount--;
+        if (this.waitCount === 0) {
+          this.loading = false;
+          this.loadingService.stopLoading();
+        }
       }
     )
     this.rolesService.getAll().pipe(first()).subscribe(
       roles => {
         this.roles = roles.roles;
-        this.loading = !!--this.waitCount;
+        this.waitCount--;
+        if (this.waitCount === 0) {
+          this.loading = false;
+          this.loadingService.stopLoading();
+        }
       }
     )
   }
@@ -66,12 +77,12 @@ export class UsersComponent implements OnInit {
   onEdit(user: EditedUser) {
     let observer = {
       next: () => {
-        this.loading = true;
+        this.loadingService.startLoading();
         this.userService.getAll().pipe(first()).subscribe(
           users => {
             this.users = users.users;
-            this.loading = false;
             this.newUser = undefined;
+            this.loadingService.stopLoading();
           }
         );
       },
@@ -97,11 +108,11 @@ export class UsersComponent implements OnInit {
     if (!this.newUser) {
       this.userService.delete(deletedUser.id).pipe(first()).subscribe({
         next: () => {
-          this.loading = true;
+          this.loadingService.startLoading();
           this.userService.getAll().pipe(first()).subscribe(
             users => {
               this.users = users.users;
-              this.loading = false;
+              this.loadingService.stopLoading();
             }
           )
         },

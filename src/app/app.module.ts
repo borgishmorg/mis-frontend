@@ -26,6 +26,7 @@ import { RolesComponent } from './roles/roles.component'
 import { RoleComponent } from './roles/role/role.component';
 import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user/user.component';
+import { LoadingComponent } from './loading/loading.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
@@ -37,6 +38,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     RoleComponent,
     UsersComponent,
     UserComponent,
+    LoadingComponent,
     NotFoundComponent
   ],
   imports: [

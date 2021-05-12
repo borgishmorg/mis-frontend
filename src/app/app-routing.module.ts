@@ -6,11 +6,17 @@ import { LoginComponent } from '@app/login/login.component';
 import { RolesComponent } from '@app/roles/roles.component';
 import { AuthGuard, PermissionEnum } from '@app/auth.guard';
 import { UsersComponent } from './users/users.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'notfound',
+    component: NotFoundComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -29,11 +35,9 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
-
-  // otherwise redirect to home
   { 
     path: '**', 
-    redirectTo: '' 
+    redirectTo: 'notfound' 
   }
 ];
 

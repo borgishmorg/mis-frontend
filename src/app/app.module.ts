@@ -26,6 +26,7 @@ import { RolesComponent } from './roles/roles.component'
 import { RoleComponent } from './roles/role/role.component';
 import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user/user.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { UserComponent } from './users/user/user.component';
     RolesComponent,
     RoleComponent,
     UsersComponent,
-    UserComponent
+    UserComponent,
+    NotFoundComponent
   ],
   imports: [
 	BrowserModule,

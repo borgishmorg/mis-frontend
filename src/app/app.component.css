@@ -1,17 +1,21 @@
 .nav-link {
-    margin-right: 2ch;
+  margin-right: 2ch;
 }
 
 .example-spacer {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 .app-nav {
-    position: relative;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
 }
 
 .app-loading {
-    position: relative;
-    z-index: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.app-container {
+  margin: 2%;
 }

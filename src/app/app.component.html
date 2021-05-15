@@ -1,27 +1,35 @@
 <mat-toolbar class="app-nav" *ngIf="user">
-    <a mat-button class="nav-link" routerLink="/"><h1>МИС</h1></a>
-    <a mat-raised-button 
-        color="primary" 
-        class="nav-link" 
-        routerLink="" 
-        *ngIf="true"
-        >Пациенты</a>
-    <a mat-raised-button 
-        color="primary" 
-        class="nav-link" 
-        routerLink="/users" 
-        *ngIf="canSeeUsers"
-        >Сотрудники</a>
-    <a mat-raised-button 
-        color="primary" 
-        class="nav-link" 
-        routerLink="/roles" 
-        *ngIf="canSeeRoles"
-        >Роли</a>
-    <span class="example-spacer"></span>
-    <a mat-raised-button color="warn" class="nav-logout" (click)="logout()">Выйти</a>
+  <a mat-button class="nav-link" routerLink="/"><h1>МИС</h1></a>
+  <a
+    mat-raised-button
+    color="primary"
+    class="nav-link"
+    routerLink=""
+    *ngIf="true"
+    >Пациенты</a
+  >
+  <a
+    mat-raised-button
+    color="primary"
+    class="nav-link"
+    routerLink="/users"
+    *ngIf="canSeeUsers"
+    >Сотрудники</a
+  >
+  <a
+    mat-raised-button
+    color="primary"
+    class="nav-link"
+    routerLink="/roles"
+    *ngIf="canSeeRoles"
+    >Роли</a
+  >
+  <span class="example-spacer"></span>
+  <a mat-raised-button color="warn" class="nav-logout" (click)="logout()"
+    >Выйти</a
+  >
 </mat-toolbar>
-<div>
-    <app-loading class="app-loading"></app-loading>
-    <router-outlet></router-outlet>
+<app-loading class="app-loading"></app-loading>
+<div class="app-container">
+  <router-outlet></router-outlet>
 </div>

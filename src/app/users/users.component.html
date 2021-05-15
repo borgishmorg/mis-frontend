@@ -1,26 +1,13 @@
-<div class="container" *ngIf="!loading">
-    <mat-accordion *ngIf="!newUser">
-        <mat-expansion-panel *ngFor="let user of users">
-            <mat-expansion-panel-header>
-                <mat-panel-title>{{user.login}}</mat-panel-title>
-            </mat-expansion-panel-header>
-            <app-user 
-            [user]="user"
-            [roles]="roles"
-            (editedUser)="onEdit($event)"
-            (deletedUser)="onDelete($event)"
-            ></app-user>
-        </mat-expansion-panel>
-    </mat-accordion>
-    <div>
-        <button mat-flat-button class="add" *ngIf="canEdit && !newUser" (click)="add()">Добавить</button>
-        <app-user 
-        *ngIf="newUser"
-        [user]="newUser" 
-        [roles]="roles"
-        [passwordRequired]="true"
-        (editedUser)="onEdit($event)"
-        (deletedUser)="onDelete($event)"
-        ></app-user>
-    </div>
+<div class="container" *ngIf="users">
+  <mat-card
+    *ngFor="let user of users"
+    [routerLink]="'' + user.id"
+    class="user-card"
+  >
+    <mat-card-title>{{ user.login }}</mat-card-title>
+    <mat-card-subtitle>{{ user.role.name }}</mat-card-subtitle>
+  </mat-card>
+  <button mat-fab class="add" color="accent" *ngIf="canAdd" (click)="add()">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>

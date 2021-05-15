@@ -22,9 +22,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         this.authenticationService.logout();
       }
 
-      const error = err.error.detail;
+      // const error = err.error.detail;
       // const error = err.error.detail || err.statusText;
-      return throwError(error);
+      return throwError(err);
     }));
   }
 }

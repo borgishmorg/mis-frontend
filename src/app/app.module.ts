@@ -28,6 +28,7 @@ import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user/user.component';
 import { LoadingComponent } from './loading/loading.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { NewUserComponent } from './users/new-user/new-user.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     UsersComponent,
     UserComponent,
     LoadingComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    NewUserComponent
   ],
   imports: [
 	BrowserModule,

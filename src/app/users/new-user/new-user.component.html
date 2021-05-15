@@ -10,44 +10,27 @@
     <mat-card-content>
       <section class="input-section">
         <mat-form-field class="input-field">
-          <mat-label>Id:</mat-label>
-          <input
-            matInput
-            type="text"
-            required="True"
-            [disabled]="true"
-            [(ngModel)]="user.id"
-          />
-        </mat-form-field>
-        <mat-form-field class="input-field">
           <mat-label>Логин:</mat-label>
           <input
             matInput
             type="text"
             required="True"
             pattern="[a-zA-Z]+"
-            [disabled]="!canEdit"
             [(ngModel)]="user.login"
           />
         </mat-form-field>
-        <mat-form-field class="input-field" *ngIf="canEdit">
+        <mat-form-field class="input-field">
           <mat-label>Пароль:</mat-label>
           <input
             matInput
             type="text"
             pattern="[a-zA-Z]+"
-            *ngIf="canEdit"
-            [disabled]="!canEdit"
             [(ngModel)]="user.password"
           />
         </mat-form-field>
         <mat-form-field class="input-field">
           <mat-label>Роль:</mat-label>
-          <mat-select
-            [(ngModel)]="user.role.code"
-            name="role"
-            [disabled]="!canEdit"
-          >
+          <mat-select [(ngModel)]="user.role.code" name="role">
             <mat-option *ngFor="let role of roles" [value]="role.code">
               {{ role.name }}
             </mat-option>
@@ -56,13 +39,8 @@
       </section>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button color="accent" *ngIf="canEdit" (click)="save()">
-        Сохранить
-      </button>
-      <button mat-button *ngIf="canEdit" (click)="discard()">Сбросить</button>
-      <button mat-button color="warn" *ngIf="canEdit" (click)="delete()">
-        Удалить
-      </button>
+      <button mat-button color="accent" (click)="save()">Сохранить</button>
+      <button mat-button (click)="discard()">Сбросить</button>
       <p style="color: red" *ngIf="error">{{ error }}</p>
     </mat-card-actions>
   </mat-card>

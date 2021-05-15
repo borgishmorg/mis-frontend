@@ -18,6 +18,7 @@ export interface User {
 export interface UserPost {
   id: number;
   login: string;
+  password?: string;
   role: string;
 }
 
@@ -26,11 +27,10 @@ export interface Users {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class UserService {
-
-  constructor(private http: HttpClient) { }
+export class UsersService {
+  constructor(private http: HttpClient) {}
 
   getAll() {
     return this.http.get<Users>(`${environment.apiUrl}/users`);
@@ -43,8 +43,8 @@ export class UserService {
   post(user: UserPost) {
     return this.http.post<User>(`${environment.apiUrl}/users`, user);
   }
-  
-  put(id: number, user: UserPost) {    
+
+  put(id: number, user: UserPost) {
     return this.http.put<User>(`${environment.apiUrl}/users/${id}`, user);
   }
 

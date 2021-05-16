@@ -3,28 +3,50 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, mergeMap } from 'rxjs/operators';
 
 import { AuthenticationService } from '@services/authentication.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-
   constructor(private authenticationService: AuthenticationService) {}
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(request).pipe(catchError(err => {
-      if ([401, 403].indexOf(err.status) !== -1) {
-        // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-        this.authenticationService.logout();
-      }
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
+    if (request.url.endsWith('refresh') || request.url.endsWith('login')) {
+      return next.handle(request);
+    }
 
-      // const error = err.error.detail;
-      // const error = err.error.detail || err.statusText;
-      return throwError(err);
-    }));
+    return next.handle(request).pipe(
+      catchError((err) => {
+        if ([401, 403].indexOf(err.status) !== -1) {
+          return this.authenticationService
+            .refresh()
+            .pipe(
+              catchError((error) => {
+                this.authenticationService.logout();
+                return throwError(error);
+              })
+            )
+            .pipe(
+              mergeMap(() =>
+                next.handle(request).pipe(
+                  catchError((error) => {
+                    this.authenticationService.logout();
+                    return throwError(error);
+                  })
+                )
+              )
+            );
+        } else {
+          return throwError(err);
+        }
+      })
+    );
   }
 }

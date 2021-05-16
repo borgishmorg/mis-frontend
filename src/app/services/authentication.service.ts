@@ -74,6 +74,30 @@ export class AuthenticationService {
       );
   }
 
+  refresh() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${this.refresh_token}`,
+      }),
+    };
+
+    return this.http
+      .post<Tokens>(
+        `${environment.apiUrl}/auth/refresh`,
+        undefined,
+        httpOptions
+      )
+      .pipe(
+        map((tokens) => {
+          localStorage.setItem('tokens', JSON.stringify(tokens));
+          this.access_token = tokens.access_token;
+          this.refresh_token = tokens.refresh_token;
+          this.userSubject.next(tokens.user);
+          return tokens;
+        })
+      );
+  }
+
   logout() {
     localStorage.removeItem('tokens');
     this.userSubject.next(undefined);

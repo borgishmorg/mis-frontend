@@ -6,8 +6,8 @@ import { User, UsersService } from '@services/user.service';
 import { Role, RolesService } from '@app/services/roles.service';
 import { LoadingService } from '@app/services/loading.service';
 import { NotificationsService } from '@app/services/notifications.service';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
+import { throwError, of } from 'rxjs';
 
 export interface EditedUser extends User {
   password?: string;
@@ -44,40 +44,38 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadingService.startLoading();
-    this.route.paramMap.subscribe((params) => {
-      const user_id = params.get('user_id');
-      if (!user_id || !+user_id) {
-        this.router.navigate(['notfound']);
-      }
-      if (this.canViewRoles) {
-        this.rolesService
-          .getAll()
-          .pipe(
-            catchError((error) => {
-              this.notificationsService.error(error);
-              return throwError(error);
-            })
-          )
-          .subscribe((roles) => {
-            this.roles = roles.roles;
-          });
-      }
-      this.usersService
-        .get(+user_id!)
-        .toPromise()
-        .then((user) => {
+    this.route.paramMap
+      .pipe(
+        mergeMap((params) => {
+          const user_id = params.get('user_id');
+          if (!user_id || !+user_id) return throwError('');
+          return this.usersService.get(+user_id);
+        })
+      )
+      .pipe(
+        catchError((error) => {
+          this.router.navigate(['notfound']);
+          return throwError(error);
+        })
+      )
+      .pipe(
+        mergeMap((user) => {
           this.user = user;
           this.oldUser = JSON.parse(JSON.stringify(user));
-          if (!this.canViewRoles)
-            this.roles = [{ ...user.role, permissions: [] }];
-          this.loadingService.stopLoading();
+          if (this.canViewRoles) return this.rolesService.getAll();
+          return of({ roles: [{ ...user.role, permissions: [] }] });
         })
-        .catch((error) => {
-          this.loadingService.stopLoading();
-          if (error.status === 404) this.router.navigate(['notfound']);
-          else this.notificationsService.error(error);
-        });
-    });
+      )
+      .pipe(
+        catchError((error) => {
+          this.notificationsService.error(error);
+          return throwError(error);
+        })
+      )
+      .subscribe((roles) => {
+        this.roles = roles.roles;
+        this.loadingService.stopLoading();
+      });
   }
 
   back() {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { first } from 'rxjs/operators';
+import { catchError, first, mergeMap } from 'rxjs/operators';
 
 import {
   Permission,
@@ -14,6 +14,7 @@ import { PermissionEnum } from '@app/auth.guard';
 import { EditedRole } from './role/role.component';
 import { LoadingService } from '@app/services/loading.service';
 import { NotificationsService } from '@app/services/notifications.service';
+import { Observable, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-roles',
@@ -21,9 +22,6 @@ import { NotificationsService } from '@app/services/notifications.service';
   styleUrls: ['./roles.component.css'],
 })
 export class RolesComponent implements OnInit {
-  loading: boolean = true;
-  private waitCount: number = 2;
-
   user?: TokenUser;
   roles: Role[] = [];
   permissions: Permission[] = [];
@@ -42,33 +40,26 @@ export class RolesComponent implements OnInit {
     this.loadingService.startLoading();
     this.permissionsService
       .getAll()
-      .pipe(first())
-      .subscribe((permissions) => {
-        this.permissions = permissions.permissions;
-        this.waitCount--;
-        if (this.waitCount === 0) {
-          this.loading = false;
-          this.loadingService.stopLoading();
-        }
-      });
-    this.rolesService
-      .getAll()
-      .pipe(first())
+      .pipe(
+        mergeMap((permissions) => {
+          this.permissions = permissions.permissions;
+          return this.rolesService.getAll();
+        })
+      )
+      .pipe(
+        catchError((error) => {
+          this.notificationsService.error(error);
+          return throwError(error);
+        })
+      )
       .subscribe((roles) => {
         this.roles = roles.roles;
-        this.waitCount--;
-        if (this.waitCount === 0) {
-          this.loading = false;
-          this.loadingService.stopLoading();
-        }
+        this.loadingService.stopLoading();
       });
-    this.authenticationService.user.subscribe((user) => {
-      this.user = user;
-    });
   }
 
   get canEdit() {
-    return !!this.user?.permissions.includes(PermissionEnum.ROLES_EDIT);
+    return this.authenticationService.hasPemission(PermissionEnum.ROLES_EDIT);
   }
 
   add() {
@@ -79,81 +70,58 @@ export class RolesComponent implements OnInit {
     };
   }
 
-  onEdit(editedRole: EditedRole) {
-    let observer = {
-      next: () => {
-        this.loadingService.startLoading();
-        this.rolesService
-          .getAll()
-          .pipe(first())
-          .subscribe({
-            next: (roles) => {
-              this.roles = roles.roles;
-              this.newRole = undefined;
-              this.loadingService.stopLoading();
-            },
-            error: (error) => {
-              this.loadingService.stopLoading();
-              this.notificationsService.error(error);
-            },
-          });
-      },
-      error: (error: any) => {
-        this.notificationsService.error(error);
-      },
-    };
-
-    if (!this.newRole) {
-      this.rolesService
-        .put(editedRole.oldCode, {
-          ...editedRole,
-          permissions: editedRole.permissions.map(
-            (permission) => permission.code
-          ),
-        })
-        .pipe(first())
-        .subscribe(observer);
+  edit(editedRole: EditedRole) {
+    let editResult: Observable<Object>;
+    if (this.newRole) {
+      editResult = this.rolesService.post({
+        ...editedRole,
+        permissions: editedRole.permissions.map(
+          (permission) => permission.code
+        ),
+      });
     } else {
-      this.rolesService
-        .post({
-          ...editedRole,
-          permissions: editedRole.permissions.map(
-            (permission) => permission.code
-          ),
-        })
-        .pipe(first())
-        .subscribe(observer);
+      editResult = this.rolesService.put(editedRole.oldCode, {
+        ...editedRole,
+        permissions: editedRole.permissions.map(
+          (permission) => permission.code
+        ),
+      });
     }
+
+    editResult
+      .pipe(mergeMap(() => this.rolesService.getAll()))
+      .pipe(
+        catchError((error) => {
+          this.loadingService.stopLoading();
+          this.notificationsService.error(error);
+          return throwError(error);
+        })
+      )
+      .subscribe((roles) => {
+        this.roles = roles.roles;
+        this.newRole = undefined;
+        this.loadingService.stopLoading();
+      });
   }
 
-  onDelete(deletedRole: EditedRole) {
-    if (!this.newRole) {
-      this.rolesService
-        .delete(deletedRole.oldCode)
-        .pipe(first())
-        .subscribe({
-          next: () => {
-            this.loadingService.startLoading();
-            this.rolesService
-              .getAll()
-              .pipe(first())
-              .subscribe({
-                next: (roles) => {
-                  this.roles = roles.roles;
-                  this.loadingService.stopLoading();
-                },
-                error: (error) => {
-                  this.loadingService.stopLoading();
-                  this.notificationsService.error(error);
-                },
-              });
-          },
-          error: (error) => {
-            this.notificationsService.error(error);
-          },
-        });
-    } else {
+  delete(deletedRole: EditedRole) {
+    if (this.newRole) {
       this.newRole = undefined;
+      return;
     }
+    this.rolesService
+      .delete(deletedRole.oldCode)
+      .pipe(mergeMap(() => this.rolesService.getAll()))
+      .pipe(
+        catchError((error) => {
+          this.loadingService.stopLoading();
+          this.notificationsService.error(error);
+          return throwError(error);
+        })
+      )
+      .subscribe((roles) => {
+        this.roles = roles.roles;
+        this.loadingService.stopLoading();
+      });
   }
 }

@@ -1,17 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  OnDestroy,
-} from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import {
-  AuthenticationService,
-  TokenUser,
-} from '@app/services/authentication.service';
+import { AuthenticationService } from '@app/services/authentication.service';
 import { Permission } from '@app/services/permissions.service';
 import { Role } from '@app/services/roles.service';
 import { PermissionEnum } from '@app/auth.guard';
@@ -34,16 +23,13 @@ export interface PermissionsGroup {
   templateUrl: './role.component.html',
   styleUrls: ['./role.component.css'],
 })
-export class RoleComponent implements OnInit, OnDestroy {
+export class RoleComponent implements OnInit {
   @Input() role?: Role;
   oldRole?: Role;
   @Input() allPermissions: Permission[] = [];
 
   @Output() editedRole = new EventEmitter<EditedRole>();
   @Output() deletedRole = new EventEmitter<EditedRole>();
-
-  user?: TokenUser;
-  userSubscription?: Subscription;
 
   allChecked: boolean = false;
   permissionsGroup: PermissionsGroup = {
@@ -61,22 +47,10 @@ export class RoleComponent implements OnInit, OnDestroy {
         permissions: this.role.permissions,
       };
     }
-
-    this.userSubscription = this.authenticationService.user.subscribe(
-      (user) => {
-        this.user = user;
-      }
-    );
-    this.dropForm();
+    this.discard();
   }
 
-  ngOnDestroy(): void {
-    if (this.userSubscription) {
-      this.userSubscription.unsubscribe();
-    }
-  }
-
-  dropForm() {
+  discard() {
     this.permissionsGroup = {
       checked: false,
       permissions: this.allPermissions.map((p) => {
@@ -120,7 +94,7 @@ export class RoleComponent implements OnInit, OnDestroy {
   }
 
   get canEdit() {
-    return this.user?.permissions.includes(PermissionEnum.ROLES_EDIT);
+    return this.authenticationService.hasPemission(PermissionEnum.ROLES_EDIT);
   }
 
   updateAllChecked() {

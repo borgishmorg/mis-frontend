@@ -1,4 +1,4 @@
-<section class="container" *ngIf="!loading">
+<section class="container">
   <mat-accordion *ngIf="!newRole">
     <mat-expansion-panel *ngFor="let role of roles">
       <mat-expansion-panel-header>
@@ -7,8 +7,8 @@
       <app-role
         [role]="role"
         [allPermissions]="permissions"
-        (editedRole)="onEdit($event)"
-        (deletedRole)="onDelete($event)"
+        (editedRole)="edit($event)"
+        (deletedRole)="delete($event)"
       ></app-role>
     </mat-expansion-panel>
   </mat-accordion>
@@ -25,8 +25,8 @@
       [role]="newRole"
       [allPermissions]="permissions"
       *ngIf="newRole"
-      (editedRole)="onEdit($event)"
-      (deletedRole)="onDelete($event)"
+      (editedRole)="edit($event)"
+      (deletedRole)="delete($event)"
     ></app-role>
   </div>
 </section>

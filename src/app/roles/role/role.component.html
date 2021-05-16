@@ -1,50 +1,58 @@
 <mat-card *ngIf="role">
-    <mat-card-header>
-
-    </mat-card-header>
-    <mat-card-content>
-        <section class="code-name">
-            <mat-form-field class="text-input">
-                <mat-label>Имя:</mat-label>
-                <input matInput 
-                type="text" 
-                required=True
-                [disabled]="!canEdit"
-                [(ngModel)]="role.name"/>
-            </mat-form-field>
-            <mat-form-field class="text-input">
-                <mat-label>Код:</mat-label>
-                <input matInput 
-                type="text"
-                required=True
-                pattern="[a-zA-Z]+"
-                [disabled]="!canEdit"
-                [(ngModel)]="role.code"/>
-            </mat-form-field>
-        </section>
-        <section>
-            <mat-checkbox 
-            class="example-margin"
-            [checked]="allChecked"
-            [indeterminate]="someComplete()"
+  <mat-card-header> </mat-card-header>
+  <mat-card-content>
+    <section class="code-name">
+      <mat-form-field class="text-input">
+        <mat-label>Имя:</mat-label>
+        <input
+          matInput
+          type="text"
+          required="True"
+          [disabled]="!canEdit"
+          [(ngModel)]="role.name"
+        />
+      </mat-form-field>
+      <mat-form-field class="text-input">
+        <mat-label>Код:</mat-label>
+        <input
+          matInput
+          type="text"
+          required="True"
+          pattern="[a-zA-Z]+"
+          [disabled]="!canEdit"
+          [(ngModel)]="role.code"
+        />
+      </mat-form-field>
+    </section>
+    <section>
+      <mat-checkbox
+        class="example-margin"
+        [checked]="allChecked"
+        [indeterminate]="someComplete()"
+        [disabled]="!canEdit"
+        (change)="setAll($event.checked)"
+        >Разрешения</mat-checkbox
+      >
+      <ul>
+        <li *ngFor="let permission of permissionsGroup?.permissions">
+          <mat-checkbox
+            [(ngModel)]="permission.checked"
             [disabled]="!canEdit"
-            (change)="setAll($event.checked)">Разрешения</mat-checkbox>
-            <ul>
-                <li *ngFor="let permission of permissionsGroup?.permissions">
-                    <mat-checkbox 
-                    [(ngModel)]="permission.checked"
-                    [disabled]="!canEdit"
-                    (ngModelChange)="updateAllChecked()">{{permission.name}}</mat-checkbox>
-                </li>
-            </ul>
-        </section>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-button color="accent" *ngIf="canEdit" (click)="save()">Сохранить</button>
-        <button mat-button *ngIf="canEdit" (click)="dropForm()">Сбросить</button>
-        <button mat-button color="warn" *ngIf="canEdit" (click)="delete()">Удалить</button>
-        <p style="color: red;" *ngIf="error">{{error}}</p>
-    </mat-card-actions>
-    <mat-card-footer>
-    </mat-card-footer>
+            (ngModelChange)="updateAllChecked()"
+            >{{ permission.name }}</mat-checkbox
+          >
+        </li>
+      </ul>
+    </section>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button color="accent" *ngIf="canEdit" (click)="save()">
+      Сохранить
+    </button>
+    <button mat-button *ngIf="canEdit" (click)="dropForm()">Сбросить</button>
+    <button mat-button color="warn" *ngIf="canEdit" (click)="delete()">
+      Удалить
+    </button>
+  </mat-card-actions>
+  <mat-card-footer> </mat-card-footer>
 </mat-card>

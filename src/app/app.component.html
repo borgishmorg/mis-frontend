@@ -1,4 +1,4 @@
-<mat-toolbar class="app-nav" *ngIf="user">
+<mat-toolbar class="app-nav" *ngIf="authenticationService.userValue">
   <a mat-button class="nav-link" routerLink="/"><h1>МИС</h1></a>
   <a
     mat-raised-button

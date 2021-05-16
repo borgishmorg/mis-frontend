@@ -1,33 +1,28 @@
 import { Component } from '@angular/core';
 
-import { AuthenticationService, TokenUser } from '@services/authentication.service';
-import { PermissionEnum } from '@app/auth.guard'
+import { AuthenticationService } from '@services/authentication.service';
+import { PermissionEnum } from '@app/auth.guard';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'mis-frontend';
-  user?: TokenUser;
 
-  constructor(
-    private authenticationService: AuthenticationService
-  ) {
-    this.authenticationService.user.subscribe(x => this.user = x);
-  }
+  constructor(public authenticationService: AuthenticationService) {}
 
   get canSeeAdmin() {
-    return this.user?.permissions.indexOf(PermissionEnum.USERS_VIEW) !== -1;
+    return this.authenticationService.hasPemission(PermissionEnum.USERS_VIEW);
   }
 
   get canSeeRoles() {
-    return this.user?.permissions.indexOf(PermissionEnum.ROLES_VIEW) !== -1;
+    return this.authenticationService.hasPemission(PermissionEnum.ROLES_VIEW);
   }
 
   get canSeeUsers() {
-    return this.user?.permissions.indexOf(PermissionEnum.USERS_VIEW) !== -1;
+    return this.authenticationService.hasPemission(PermissionEnum.USERS_VIEW);
   }
 
   logout() {

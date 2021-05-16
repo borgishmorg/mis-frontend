@@ -30,21 +30,22 @@ export class ErrorInterceptor implements HttpInterceptor {
             .pipe(
               catchError((error) => {
                 this.authenticationService.logout();
-                return throwError(error);
+                return throwError(error.error.detail);
               })
             )
             .pipe(
               mergeMap(() =>
                 next.handle(request).pipe(
                   catchError((error) => {
-                    this.authenticationService.logout();
-                    return throwError(error);
+                    if ([401, 403].indexOf(error.status) !== -1)
+                      this.authenticationService.logout();
+                    return throwError(error.error.detail);
                   })
                 )
               )
             );
         } else {
-          return throwError(err);
+          return throwError(err.error.detail);
         }
       })
     );

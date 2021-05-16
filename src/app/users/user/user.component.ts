@@ -4,7 +4,10 @@ import { AuthenticationService } from '@services/authentication.service';
 import { PermissionEnum } from '@app/auth.guard';
 import { User, UsersService } from '@services/user.service';
 import { Role, RolesService } from '@app/services/roles.service';
-import { LoadingService } from '@app/loading.service';
+import { LoadingService } from '@app/services/loading.service';
+import { NotificationsService } from '@app/services/notifications.service';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 export interface EditedUser extends User {
   password?: string;
@@ -21,15 +24,14 @@ export class UserComponent implements OnInit {
 
   roles?: Role[];
 
-  error: string = '';
-
   constructor(
     private authService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
     private usersService: UsersService,
     private loadingService: LoadingService,
-    private rolesService: RolesService
+    private rolesService: RolesService,
+    private notificationsService: NotificationsService
   ) {}
 
   get canViewRoles() {
@@ -50,8 +52,13 @@ export class UserComponent implements OnInit {
       if (this.canViewRoles) {
         this.rolesService
           .getAll()
-          .toPromise()
-          .then((roles) => {
+          .pipe(
+            catchError((error) => {
+              this.notificationsService.error(error);
+              return throwError(error);
+            })
+          )
+          .subscribe((roles) => {
             this.roles = roles.roles;
           });
       }
@@ -68,7 +75,7 @@ export class UserComponent implements OnInit {
         .catch((error) => {
           this.loadingService.stopLoading();
           if (error.status === 404) this.router.navigate(['notfound']);
-          else this.error = error.error.detail;
+          else this.notificationsService.error(error);
         });
     });
   }
@@ -79,7 +86,6 @@ export class UserComponent implements OnInit {
 
   discard() {
     this.user = JSON.parse(JSON.stringify(this.oldUser));
-    this.error = '';
   }
 
   save() {
@@ -90,6 +96,12 @@ export class UserComponent implements OnInit {
           role: this.user.role.code,
           password: this.user.password ? this.user.password : undefined,
         })
+        .pipe(
+          catchError((error) => {
+            this.notificationsService.error(error);
+            return throwError(error);
+          })
+        )
         .subscribe(() => {
           this.router.navigate(['/users']);
         });
@@ -98,9 +110,17 @@ export class UserComponent implements OnInit {
 
   delete() {
     if (this.user) {
-      this.usersService.delete(this.user.id).subscribe(() => {
-        this.router.navigate(['/users']);
-      });
+      this.usersService
+        .delete(this.user.id)
+        .pipe(
+          catchError((error) => {
+            this.notificationsService.error(error);
+            return throwError(error);
+          })
+        )
+        .subscribe(() => {
+          this.router.navigate(['/users']);
+        });
     }
   }
 }

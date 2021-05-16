@@ -13,11 +13,10 @@ export interface Permissions {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PermissionsService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAll() {
     return this.http.get<Permissions>(`${environment.apiUrl}/permissions`);

@@ -1,7 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnDestroy,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { AuthenticationService, TokenUser } from '@app/services/authentication.service';
+import {
+  AuthenticationService,
+  TokenUser,
+} from '@app/services/authentication.service';
 import { Permission } from '@app/services/permissions.service';
 import { Role } from '@app/services/roles.service';
 import { PermissionEnum } from '@app/auth.guard';
@@ -22,14 +32,13 @@ export interface PermissionsGroup {
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',
-  styleUrls: ['./role.component.css']
+  styleUrls: ['./role.component.css'],
 })
 export class RoleComponent implements OnInit, OnDestroy {
-  
   @Input() role?: Role;
   oldRole?: Role;
   @Input() allPermissions: Permission[] = [];
-  
+
   @Output() editedRole = new EventEmitter<EditedRole>();
   @Output() deletedRole = new EventEmitter<EditedRole>();
 
@@ -39,25 +48,25 @@ export class RoleComponent implements OnInit, OnDestroy {
   allChecked: boolean = false;
   permissionsGroup: PermissionsGroup = {
     checked: false,
-    permissions: []
+    permissions: [],
   };
 
-  error = '';
-
-  constructor(
-    private authenticationService: AuthenticationService
-  ) { }
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
     if (this.role) {
       this.oldRole = {
         code: this.role.code,
         name: this.role.name,
-        permissions: this.role.permissions
-      }
+        permissions: this.role.permissions,
+      };
     }
-    
-    this.userSubscription = this.authenticationService.user.subscribe(user => {this.user = user});
+
+    this.userSubscription = this.authenticationService.user.subscribe(
+      (user) => {
+        this.user = user;
+      }
+    );
     this.dropForm();
   }
 
@@ -70,18 +79,19 @@ export class RoleComponent implements OnInit, OnDestroy {
   dropForm() {
     this.permissionsGroup = {
       checked: false,
-      permissions: this.allPermissions.map(p => {
+      permissions: this.allPermissions.map((p) => {
         return {
           name: p.name,
           code: p.code,
-          checked: this.hasPermission(p)
-        }
-      })
-    }
+          checked: this.hasPermission(p),
+        };
+      }),
+    };
     Object.assign(this.role, this.oldRole);
-    this.permissionsGroup.checked = this.permissionsGroup.permissions.every(p => p.checked);
+    this.permissionsGroup.checked = this.permissionsGroup.permissions.every(
+      (p) => p.checked
+    );
     this.allChecked = this.permissionsGroup.checked;
-    this.error = '';
   }
 
   save() {
@@ -89,7 +99,9 @@ export class RoleComponent implements OnInit, OnDestroy {
       this.editedRole.emit({
         ...this.role,
         oldCode: this.oldRole.code,
-        permissions: this.permissionsGroup.permissions.filter(permission => permission.checked)
+        permissions: this.permissionsGroup.permissions.filter(
+          (permission) => permission.checked
+        ),
       });
     }
   }
@@ -98,13 +110,13 @@ export class RoleComponent implements OnInit, OnDestroy {
     if (this.role && this.oldRole) {
       this.deletedRole.emit({
         oldCode: this.oldRole.code,
-        ...this.role
+        ...this.role,
       });
     }
   }
 
   hasPermission(permission: Permission): boolean {
-    return !!this.role?.permissions.some(p => p.code === permission.code)
+    return !!this.role?.permissions.some((p) => p.code === permission.code);
   }
 
   get canEdit() {
@@ -112,12 +124,17 @@ export class RoleComponent implements OnInit, OnDestroy {
   }
 
   updateAllChecked() {
-    this.allChecked = !!this.permissionsGroup?.permissions.every(p => p.checked);
+    this.allChecked = !!this.permissionsGroup?.permissions.every(
+      (p) => p.checked
+    );
   }
 
   someComplete(): boolean {
     if (!this.permissionsGroup) return false;
-    return this.permissionsGroup.permissions.filter(p => p.checked).length > 0 && !this.allChecked;
+    return (
+      this.permissionsGroup.permissions.filter((p) => p.checked).length > 0 &&
+      !this.allChecked
+    );
   }
 
   setAll(status: boolean) {
@@ -125,6 +142,6 @@ export class RoleComponent implements OnInit, OnDestroy {
     if (!this.permissionsGroup) {
       return;
     }
-    this.permissionsGroup.permissions.forEach(p => p.checked = status);
+    this.permissionsGroup.permissions.forEach((p) => (p.checked = status));
   }
 }

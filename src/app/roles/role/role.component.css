@@ -1,10 +1,10 @@
 .text-input {
-    /* padding: auto; */
-    margin-left: 0;
-    margin-right: auto;
+  /* padding: auto; */
+  margin-left: 0;
+  margin-right: auto;
 }
 
 .code-name {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }

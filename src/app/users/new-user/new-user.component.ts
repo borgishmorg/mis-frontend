@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '@services/authentication.service';
-import { PermissionEnum } from '@app/auth.guard';
+import { Router } from '@angular/router';
 import { User, UsersService } from '@services/user.service';
 import { Role, RolesService } from '@app/services/roles.service';
-import { LoadingService } from '@app/loading.service';
+import { LoadingService } from '@app/services/loading.service';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { NotificationsService } from '@app/services/notifications.service';
 
 export interface EditedUser extends User {
   password?: string;
@@ -21,21 +22,25 @@ export class NewUserComponent implements OnInit {
 
   roles?: Role[];
 
-  error: string = '';
-
   constructor(
     private router: Router,
     private usersService: UsersService,
     private loadingService: LoadingService,
-    private rolesService: RolesService
+    private rolesService: RolesService,
+    private notificationsService: NotificationsService
   ) {}
 
   ngOnInit(): void {
     this.loadingService.startLoading();
     this.rolesService
       .getAll()
-      .toPromise()
-      .then((roles) => {
+      .pipe(
+        catchError((error) => {
+          this.notificationsService.error(error);
+          return throwError(error);
+        })
+      )
+      .subscribe((roles) => {
         this.roles = roles.roles;
         this.user = {
           id: -1,
@@ -54,7 +59,6 @@ export class NewUserComponent implements OnInit {
 
   discard() {
     this.user = JSON.parse(JSON.stringify(this.oldUser));
-    this.error = '';
   }
 
   save() {
@@ -65,6 +69,12 @@ export class NewUserComponent implements OnInit {
           role: this.user.role.code,
           password: this.user.password,
         })
+        .pipe(
+          catchError((error) => {
+            this.notificationsService.error(error);
+            return throwError(error);
+          })
+        )
         .subscribe(() => {
           this.router.navigate(['/users']);
         });

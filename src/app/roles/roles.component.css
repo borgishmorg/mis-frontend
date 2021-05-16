@@ -1,10 +1,10 @@
 .container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .add {
-    margin-right: auto;
-    margin-left: 1%;
-    margin-top: 0.5%;
+  margin-right: auto;
+  margin-left: 1%;
+  margin-top: 0.5%;
 }

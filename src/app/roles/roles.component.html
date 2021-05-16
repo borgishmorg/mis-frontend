@@ -1,25 +1,32 @@
 <section class="container" *ngIf="!loading">
-    <mat-accordion *ngIf="!newRole">
-        <mat-expansion-panel *ngFor="let role of roles">
-            <mat-expansion-panel-header>
-                <mat-panel-title>{{role.name}}</mat-panel-title>
-            </mat-expansion-panel-header>
-            <app-role 
-            [role]="role" 
-            [allPermissions]="permissions"
-            (editedRole)="onEdit($event)"
-            (deletedRole)="onDelete($event)"
-            ></app-role>
-        </mat-expansion-panel>
-    </mat-accordion>
-    <div>
-        <button class="add" mat-flat-button *ngIf="canEdit && !newRole" (click)="add()">Добавить</button>
-        <app-role 
-        [role]="newRole" 
-        [allPermissions]="permissions" 
-        *ngIf="newRole"
+  <mat-accordion *ngIf="!newRole">
+    <mat-expansion-panel *ngFor="let role of roles">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ role.name }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-role
+        [role]="role"
+        [allPermissions]="permissions"
         (editedRole)="onEdit($event)"
         (deletedRole)="onDelete($event)"
-        ></app-role>
-    </div>
+      ></app-role>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <div>
+    <button
+      class="add"
+      mat-flat-button
+      *ngIf="canEdit && !newRole"
+      (click)="add()"
+    >
+      Добавить
+    </button>
+    <app-role
+      [role]="newRole"
+      [allPermissions]="permissions"
+      *ngIf="newRole"
+      (editedRole)="onEdit($event)"
+      (deletedRole)="onDelete($event)"
+    ></app-role>
+  </div>
 </section>

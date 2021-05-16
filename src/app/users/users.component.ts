@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '@app/services/authentication.service';
 import { UsersService, User } from '@app/services/user.service';
 import { PermissionEnum } from '@app/auth.guard';
-import { LoadingService } from '@app/loading.service';
+import { LoadingService } from '@app/services/loading.service';
 import { Router } from '@angular/router';
+import { NotificationsService } from '@app/services/notifications.service';
 
 @Component({
   selector: 'app-users',
@@ -13,13 +14,12 @@ import { Router } from '@angular/router';
 export class UsersComponent implements OnInit {
   users: User[] = [];
 
-  error: string = '';
-
   constructor(
     private usersService: UsersService,
     private authService: AuthenticationService,
     private loadingService: LoadingService,
-    private router: Router
+    private router: Router,
+    private notificationsService: NotificationsService
   ) {}
 
   get canAdd() {
@@ -37,6 +37,9 @@ export class UsersComponent implements OnInit {
       .then((users) => {
         this.users = users.users;
         this.loadingService.stopLoading();
+      })
+      .catch((error) => {
+        this.notificationsService.error(error);
       });
   }
 

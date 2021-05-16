@@ -14,6 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 //App
 import { AppRoutingModule } from './app-routing.module';
 import { ErrorInterceptor } from './error.interceptor';
@@ -59,6 +60,7 @@ import { NewUserComponent } from './users/new-user/new-user.component';
     MatExpansionModule,
     MatCheckboxModule,
     MatSelectModule,
+    MatSnackBarModule,
     FormsModule,
   ],
   providers: [

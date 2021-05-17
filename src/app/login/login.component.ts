@@ -54,7 +54,7 @@ export class LoginComponent {
           this.router.navigateByUrl(returnUrl);
         },
         error: (error) => {
-          this.error = error;
+          this.error = error.error.detail;
           this.loading = false;
         },
       });

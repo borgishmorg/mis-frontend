@@ -2,23 +2,34 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '@enviroment';
+import * as moment from 'moment';
+import { Moment } from 'moment';
 
 export interface UserRole {
   code: string;
   name: string;
 }
 
-export interface User {
+export interface UserBase {
   id: number;
   login: string;
   password?: string;
+
+  first_name: string;
+  surname: string;
+  patronymic?: string;
+  birthdate?: Moment;
+  address?: string;
+  phone?: string;
+  email?: string;
+  blocked: boolean;
+}
+
+export interface User extends UserBase {
   role: UserRole;
 }
 
-export interface UserPost {
-  id: number;
-  login: string;
-  password?: string;
+export interface UserPost extends UserBase {
   role: string;
 }
 
@@ -41,11 +52,23 @@ export class UsersService {
   }
 
   post(user: UserPost) {
-    return this.http.post<User>(`${environment.apiUrl}/users`, user);
+    return this.http.post<User>(`${environment.apiUrl}/users`, {
+      ...user,
+      birthdate: user.birthdate
+        ? moment(user.birthdate).format('YYYY-MM-DD')
+        : undefined,
+    });
   }
 
   put(id: number, user: UserPost) {
-    return this.http.put<User>(`${environment.apiUrl}/users/${id}`, user);
+    console.log(user.birthdate);
+    console.log(typeof user.birthdate);
+    return this.http.put<User>(`${environment.apiUrl}/users/${id}`, {
+      ...user,
+      birthdate: user.birthdate
+        ? moment(user.birthdate).format('YYYY-MM-DD')
+        : undefined,
+    });
   }
 
   delete(id: number) {

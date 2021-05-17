@@ -46,6 +46,9 @@ export class NewUserComponent implements OnInit {
           id: -1,
           login: 'login',
           password: 'password',
+          first_name: 'Имя',
+          surname: 'Фамилия',
+          blocked: false,
           role: this.roles[0],
         };
         this.oldUser = JSON.parse(JSON.stringify(this.user));

@@ -1,41 +1,91 @@
 <div class="card-container">
   <mat-card class="user-card" *ngIf="user && oldUser">
     <mat-card-header>
-      <mat-card-title>{{ oldUser.login }}</mat-card-title>
-      <mat-card-subtitle>{{ oldUser.role.name }}</mat-card-subtitle>
+      <mat-card-title>Новый пользователь</mat-card-title>
       <button mat-button class="back" (click)="back()">
         <mat-icon>arrow_back</mat-icon>
       </button>
     </mat-card-header>
     <mat-card-content>
       <section class="input-section">
-        <mat-form-field class="input-field">
-          <mat-label>Логин:</mat-label>
-          <input
-            matInput
-            type="text"
-            required="True"
-            pattern="[a-zA-Z]+"
-            [(ngModel)]="user.login"
-          />
-        </mat-form-field>
-        <mat-form-field class="input-field">
-          <mat-label>Пароль:</mat-label>
-          <input
-            matInput
-            type="text"
-            pattern="[a-zA-Z]+"
-            [(ngModel)]="user.password"
-          />
-        </mat-form-field>
-        <mat-form-field class="input-field">
-          <mat-label>Роль:</mat-label>
-          <mat-select [(ngModel)]="user.role.code" name="role">
-            <mat-option *ngFor="let role of roles" [value]="role.code">
-              {{ role.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="input-block">
+          <mat-form-field class="input-field">
+            <mat-label>Имя:</mat-label>
+            <input
+              matInput
+              type="text"
+              required="True"
+              [(ngModel)]="user.first_name"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Фамилия:</mat-label>
+            <input
+              matInput
+              type="text"
+              required="True"
+              [(ngModel)]="user.surname"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Отчество:</mat-label>
+            <input matInput type="text" [(ngModel)]="user.patronymic" />
+          </mat-form-field>
+        </div>
+        <div class="input-block">
+          <mat-form-field class="input-field">
+            <mat-label>Логин:</mat-label>
+            <input
+              matInput
+              type="text"
+              required="True"
+              [(ngModel)]="user.login"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Пароль:</mat-label>
+            <input
+              matInput
+              type="text"
+              pattern="[a-zA-Z]+"
+              required="true"
+              [(ngModel)]="user.password"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>День рождения:</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [(ngModel)]="user.birthdate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Адрес:</mat-label>
+            <input matInput type="text" [(ngModel)]="user.address" />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Телефон:</mat-label>
+            <input matInput type="text" [(ngModel)]="user.phone" />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Почта:</mat-label>
+            <input matInput type="email" [(ngModel)]="user.email" />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Роль:</mat-label>
+            <mat-select [(ngModel)]="user.role.code" name="role">
+              <mat-option *ngFor="let role of roles" [value]="role.code">
+                {{ role.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </section>
     </mat-card-content>
     <mat-card-actions>

@@ -4,7 +4,7 @@
     [routerLink]="'' + user.id"
     class="user-card"
   >
-    <mat-card-title>{{ user.login }}</mat-card-title>
+    <mat-card-title>{{ user.first_name + " " + user.surname }}</mat-card-title>
     <mat-card-subtitle>{{ user.role.name }}</mat-card-subtitle>
   </mat-card>
   <button mat-fab class="add" color="accent" *ngIf="canAdd" (click)="add()">

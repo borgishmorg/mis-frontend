@@ -7,14 +7,21 @@
 
 .user-card {
   margin: auto;
-  height: fit-content;
-  width: fit-content;
-  width: fit-content;
+  /* height: fit-content;
+  width: fit-content; */
 }
 
 .input-section {
   display: flex;
+  flex-direction: row;
+}
+
+.input-block {
+  display: flex;
   flex-direction: column;
+  margin-bottom: auto;
+  width: 20em;
+  margin: 0.5em;
 }
 
 .back {

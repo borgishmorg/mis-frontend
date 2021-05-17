@@ -1,7 +1,9 @@
 <div class="card-container">
   <mat-card class="user-card" *ngIf="user && oldUser">
     <mat-card-header>
-      <mat-card-title>{{ oldUser.login }}</mat-card-title>
+      <mat-card-title>{{
+        oldUser.first_name + " " + oldUser.surname
+      }}</mat-card-title>
       <mat-card-subtitle>{{ oldUser.role.name }}</mat-card-subtitle>
       <button mat-button class="back" (click)="back()">
         <mat-icon>arrow_back</mat-icon>
@@ -9,50 +11,130 @@
     </mat-card-header>
     <mat-card-content>
       <section class="input-section">
-        <mat-form-field class="input-field">
-          <mat-label>Id:</mat-label>
-          <input
-            matInput
-            type="text"
+        <div class="input-block">
+          <mat-form-field class="input-field">
+            <mat-label>Id:</mat-label>
+            <input
+              matInput
+              type="text"
+              required="True"
+              [disabled]="true"
+              [(ngModel)]="user.id"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Имя:</mat-label>
+            <input
+              matInput
+              type="text"
+              required="True"
+              [disabled]="!canEdit"
+              [(ngModel)]="user.first_name"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Фамилия:</mat-label>
+            <input
+              matInput
+              type="text"
+              required="True"
+              [disabled]="!canEdit"
+              [(ngModel)]="user.surname"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Отчество:</mat-label>
+            <input
+              matInput
+              type="text"
+              [disabled]="!canEdit"
+              [(ngModel)]="user.patronymic"
+            />
+          </mat-form-field>
+        </div>
+        <div class="input-block">
+          <mat-form-field class="input-field">
+            <mat-label>Логин:</mat-label>
+            <input
+              matInput
+              type="text"
+              required="True"
+              [disabled]="!canEdit"
+              [(ngModel)]="user.login"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field" *ngIf="canEdit">
+            <mat-label>Новый пароль:</mat-label>
+            <input
+              matInput
+              type="text"
+              pattern="[a-zA-Z]+"
+              *ngIf="canEdit"
+              [disabled]="!canEdit"
+              [(ngModel)]="user.password"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>День рождения:</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [disabled]="!canEdit"
+              [(ngModel)]="user.birthdate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Адрес:</mat-label>
+            <input
+              matInput
+              type="text"
+              [disabled]="!canEdit"
+              [(ngModel)]="user.address"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Телефон:</mat-label>
+            <input
+              matInput
+              type="text"
+              [disabled]="!canEdit"
+              [(ngModel)]="user.phone"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Почта:</mat-label>
+            <input
+              matInput
+              type="email"
+              [disabled]="!canEdit"
+              [(ngModel)]="user.email"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Роль:</mat-label>
+            <mat-select
+              [(ngModel)]="user.role.code"
+              name="role"
+              [disabled]="!canEdit"
+            >
+              <mat-option *ngFor="let role of roles" [value]="role.code">
+                {{ role.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-checkbox
+            class="input-field"
             required="True"
-            [disabled]="true"
-            [(ngModel)]="user.id"
-          />
-        </mat-form-field>
-        <mat-form-field class="input-field">
-          <mat-label>Логин:</mat-label>
-          <input
-            matInput
-            type="text"
-            required="True"
-            pattern="[a-zA-Z]+"
             [disabled]="!canEdit"
-            [(ngModel)]="user.login"
-          />
-        </mat-form-field>
-        <mat-form-field class="input-field" *ngIf="canEdit">
-          <mat-label>Пароль:</mat-label>
-          <input
-            matInput
-            type="text"
-            pattern="[a-zA-Z]+"
-            *ngIf="canEdit"
-            [disabled]="!canEdit"
-            [(ngModel)]="user.password"
-          />
-        </mat-form-field>
-        <mat-form-field class="input-field">
-          <mat-label>Роль:</mat-label>
-          <mat-select
-            [(ngModel)]="user.role.code"
-            name="role"
-            [disabled]="!canEdit"
+            [(ngModel)]="user.blocked"
+            >Заблокирован</mat-checkbox
           >
-            <mat-option *ngFor="let role of roles" [value]="role.code">
-              {{ role.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        </div>
       </section>
     </mat-card-content>
     <mat-card-actions>

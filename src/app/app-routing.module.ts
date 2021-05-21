@@ -8,7 +8,8 @@ import { AuthGuard, PermissionEnum } from '@app/auth.guard';
 import { UsersComponent } from '@app/users/users.component';
 import { NotFoundComponent } from '@app/not-found/not-found.component';
 import { UserComponent } from '@app/users/user/user.component';
-import { NewUserComponent } from './users/new-user/new-user.component';
+import { NewUserComponent } from '@app/users/new-user/new-user.component';
+import { PatientsComponent } from '@app/patients/patients.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,12 @@ const routes: Routes = [
     component: UsersComponent,
     canActivate: [AuthGuard],
     data: { permissions: [PermissionEnum.USERS_VIEW] },
+  },
+  {
+    path: 'patients',
+    component: PatientsComponent,
+    canActivate: [AuthGuard],
+    data: { permissions: [PermissionEnum.PATIENTS_VIEW] },
   },
   {
     path: 'login',

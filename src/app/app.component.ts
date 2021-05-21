@@ -13,8 +13,10 @@ export class AppComponent {
 
   constructor(public authenticationService: AuthenticationService) {}
 
-  get canSeeAdmin() {
-    return this.authenticationService.hasPemission(PermissionEnum.USERS_VIEW);
+  get canSeePatients() {
+    return this.authenticationService.hasPemission(
+      PermissionEnum.PATIENTS_VIEW
+    );
   }
 
   get canSeeRoles() {

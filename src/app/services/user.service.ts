@@ -61,8 +61,6 @@ export class UsersService {
   }
 
   put(id: number, user: UserPost) {
-    console.log(user.birthdate);
-    console.log(typeof user.birthdate);
     return this.http.put<User>(`${environment.apiUrl}/users/${id}`, {
       ...user,
       birthdate: user.birthdate

@@ -22,6 +22,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 //App
 import { AppRoutingModule } from './app-routing.module';
 import { ErrorInterceptor } from './error.interceptor';
@@ -37,6 +38,7 @@ import { UserComponent } from './users/user/user.component';
 import { LoadingComponent } from './loading/loading.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NewUserComponent } from './users/new-user/new-user.component';
+import { PatientsComponent } from './patients/patients.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import { NewUserComponent } from './users/new-user/new-user.component';
     LoadingComponent,
     NotFoundComponent,
     NewUserComponent,
+    PatientsComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,6 +75,7 @@ import { NewUserComponent } from './users/new-user/new-user.component';
     MatDatepickerModule,
     MomentDateModule,
     MatMomentDateModule,
+    MatAutocompleteModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },

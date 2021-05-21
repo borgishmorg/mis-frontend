@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="search-container">
+    <span style="width: 8em"></span>
+    <mat-card class="search-field">
+      <form>
+        <mat-form-field class="search-input">
+          <mat-label>Поиск</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="ФИО"
+            [formControl]="searchFieldControl"
+            [matAutocomplete]="auto"
+          />
+          <button mat-button matSuffix mat-icon-button (click)="(false)">
+            <mat-icon>search</mat-icon>
+          </button>
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option
+              *ngFor="let option of searchResults | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </mat-card>
+    <button mat-flat-button class="add-button" color="accent">Добавить</button>
+  </div>
+  <div class="patients-container">
+    <mat-card class="patient-card" *ngFor="let patient of patients">
+      <mat-card-title>
+        {{
+          patient.surname + " " + patient.first_name + " " + patient.patronymic
+        }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ moment(patient.birthdate).format("D.M.YYYY") }}
+      </mat-card-subtitle>
+    </mat-card>
+  </div>
+</div>

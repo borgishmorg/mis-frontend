@@ -16,123 +16,132 @@
       </button>
     </mat-card-header>
     <mat-card-content>
-      <section class="input-section">
-        <div class="input-block">
-          <mat-form-field class="input-field">
-            <mat-label>Фамилия:</mat-label>
-            <input
-              matInput
-              type="text"
-              required="True"
-              [disabled]="!canEdit || !editing"
-              [(ngModel)]="patient.surname"
-            />
-          </mat-form-field>
-          <mat-form-field class="input-field">
-            <mat-label>Имя:</mat-label>
-            <input
-              matInput
-              type="text"
-              required="True"
-              [disabled]="!canEdit || !editing"
-              [(ngModel)]="patient.first_name"
-            />
-          </mat-form-field>
-          <mat-form-field class="input-field">
-            <mat-label>Отчество:</mat-label>
-            <input
-              matInput
-              type="text"
-              [disabled]="!canEdit || !editing"
-              [(ngModel)]="patient.patronymic"
-            />
-          </mat-form-field>
-          <mat-form-field class="input-field">
-            <mat-label>Пол:</mat-label>
-            <mat-select
-              matNativeControl
-              [(ngModel)]="patient.sex"
-              [disabled]="!canEdit || !editing"
-            >
-              <mat-option [value]="0">Неизвестный</mat-option>
-              <mat-option [value]="1">Мужской</mat-option>
-              <mat-option [value]="2">Женский</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="input-block">
-          <mat-form-field class="input-field">
-            <mat-label>День рождения:</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              [disabled]="!canEdit || !editing"
-              [(ngModel)]="patient.birthdate"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field class="input-field">
-            <mat-label>Адрес:</mat-label>
-            <input
-              matInput
-              type="text"
-              [disabled]="!canEdit || !editing"
-              [(ngModel)]="patient.address"
-            />
-          </mat-form-field>
-          <mat-form-field class="input-field">
-            <mat-label>Телефон:</mat-label>
-            <input
-              matInput
-              type="text"
-              [disabled]="!canEdit || !editing"
-              [(ngModel)]="patient.phone"
-            />
-          </mat-form-field>
-          <mat-form-field class="input-field">
-            <mat-label>Почта:</mat-label>
-            <input
-              matInput
-              type="email"
-              [disabled]="!canEdit || !editing"
-              [(ngModel)]="patient.email"
-            />
-          </mat-form-field>
-        </div>
-      </section>
+      <mat-tab-group dynamicHeight>
+        <mat-tab label="Карта">
+          <mat-card>
+            <mat-card-content>
+              <section class="input-section">
+                <div class="input-block">
+                  <mat-form-field class="input-field">
+                    <mat-label>Фамилия:</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      required="True"
+                      [disabled]="!canEdit || !editing"
+                      [(ngModel)]="patient.surname"
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="input-field">
+                    <mat-label>Имя:</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      required="True"
+                      [disabled]="!canEdit || !editing"
+                      [(ngModel)]="patient.first_name"
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="input-field">
+                    <mat-label>Отчество:</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      [disabled]="!canEdit || !editing"
+                      [(ngModel)]="patient.patronymic"
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="input-field">
+                    <mat-label>Пол:</mat-label>
+                    <mat-select
+                      matNativeControl
+                      [(ngModel)]="patient.sex"
+                      [disabled]="!canEdit || !editing"
+                    >
+                      <mat-option [value]="0">Неизвестный</mat-option>
+                      <mat-option [value]="1">Мужской</mat-option>
+                      <mat-option [value]="2">Женский</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="input-block">
+                  <mat-form-field class="input-field">
+                    <mat-label>День рождения:</mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="picker"
+                      [disabled]="!canEdit || !editing"
+                      [(ngModel)]="patient.birthdate"
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field class="input-field">
+                    <mat-label>Адрес:</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      [disabled]="!canEdit || !editing"
+                      [(ngModel)]="patient.address"
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="input-field">
+                    <mat-label>Телефон:</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      [disabled]="!canEdit || !editing"
+                      [(ngModel)]="patient.phone"
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="input-field">
+                    <mat-label>Почта:</mat-label>
+                    <input
+                      matInput
+                      type="email"
+                      [disabled]="!canEdit || !editing"
+                      [(ngModel)]="patient.email"
+                    />
+                  </mat-form-field>
+                </div>
+              </section>
+            </mat-card-content>
+            <mat-card-actions>
+              <button
+                mat-button
+                color="accent"
+                *ngIf="canEdit && !editing"
+                (click)="edit()"
+              >
+                Редактировать
+              </button>
+              <button
+                mat-button
+                color="accent"
+                *ngIf="canEdit && editing"
+                (click)="save()"
+              >
+                Сохранить
+              </button>
+              <button mat-button *ngIf="canEdit && editing" (click)="discard()">
+                Сбросить
+              </button>
+              <button
+                mat-button
+                color="warn"
+                *ngIf="canEdit && editing"
+                (click)="delete()"
+              >
+                Удалить
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-tab>
+        <mat-tab label="Осмотры" *ngIf="canSeeExaminationsTab"></mat-tab>
+      </mat-tab-group>
     </mat-card-content>
-    <mat-card-actions>
-      <button
-        mat-button
-        color="accent"
-        *ngIf="canEdit && !editing"
-        (click)="edit()"
-      >
-        Редактировать
-      </button>
-      <button
-        mat-button
-        color="accent"
-        *ngIf="canEdit && editing"
-        (click)="save()"
-      >
-        Сохранить
-      </button>
-      <button mat-button *ngIf="canEdit && editing" (click)="discard()">
-        Сбросить
-      </button>
-      <button
-        mat-button
-        color="warn"
-        *ngIf="canEdit && editing"
-        (click)="delete()"
-      >
-        Удалить
-      </button>
-    </mat-card-actions>
   </mat-card>
 </div>

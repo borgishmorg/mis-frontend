@@ -46,6 +46,13 @@ export class AuthenticationService {
     return !!this.userSubject.value?.permissions.includes(permission);
   }
 
+  public hasPemissions(permissions: PermissionEnum[]): boolean {
+    return !!this.userSubject.value?.permissions.some(
+      (user_permission) =>
+        !!permissions.some((permission) => permission == user_permission)
+    );
+  }
+
   login(username: string, password: string) {
     const httpOptions = {
       headers: new HttpHeaders({

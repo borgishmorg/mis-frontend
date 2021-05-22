@@ -19,6 +19,9 @@ export enum PermissionEnum {
 
   PATIENTS_EDIT = 'patients:edit',
   PATIENTS_VIEW = 'patients:view',
+
+  EXAMINATIONS_EDIT = 'examinations:edit',
+  EXAMINATIONS_VIEW = 'examinations:view',
 }
 
 @Injectable({

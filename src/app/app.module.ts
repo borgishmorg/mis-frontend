@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTabsModule } from '@angular/material/tabs';
 //App
 import { AppRoutingModule } from './app-routing.module';
 import { ErrorInterceptor } from './error.interceptor';
@@ -64,6 +65,9 @@ import { NewPatientComponent } from './patients/new-patient/new-patient.componen
     BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
+    MomentDateModule,
+    // Material modules
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
@@ -75,11 +79,10 @@ import { NewPatientComponent } from './patients/new-patient/new-patient.componen
     MatCheckboxModule,
     MatSelectModule,
     MatSnackBarModule,
-    FormsModule,
     MatDatepickerModule,
-    MomentDateModule,
     MatMomentDateModule,
     MatAutocompleteModule,
+    MatTabsModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },

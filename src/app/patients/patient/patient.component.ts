@@ -4,10 +4,11 @@ import { PermissionEnum } from '@app/auth.guard';
 import { AuthenticationService } from '@app/services/authentication.service';
 import { LoadingService } from '@app/services/loading.service';
 import { NotificationsService } from '@app/services/notifications.service';
-import { Sex, Patient, PatientsService } from '@app/services/patients.service';
+import { Patient, PatientsService } from '@app/services/patients.service';
 import { throwError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 import * as _moment from 'moment';
+import { ExaminationsService } from '@app/services/examinations.service';
 
 @Component({
   selector: 'app-patient',
@@ -28,8 +29,13 @@ export class PatientComponent implements OnInit {
     private router: Router,
     private loadingService: LoadingService,
     private notificationsService: NotificationsService,
-    private patientsService: PatientsService
+    private patientsService: PatientsService,
+    private examinationsService: ExaminationsService
   ) {}
+
+  get canSeeExaminationsTab() {
+    return this.authService.hasPemissions([PermissionEnum.EXAMINATIONS_VIEW]);
+  }
 
   get canEdit() {
     return this.authService.hasPemission(PermissionEnum.PATIENTS_EDIT);

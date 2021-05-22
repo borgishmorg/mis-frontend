@@ -19,7 +19,7 @@ import {
 })
 export class PatientsComponent implements OnInit {
   searchFieldControl = new FormControl();
-  searchResults!: Observable<Patient[]>;
+  searchResults: Observable<Patient[]> | undefined;
 
   moment = _moment;
 

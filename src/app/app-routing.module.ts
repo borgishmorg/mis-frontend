@@ -10,6 +10,8 @@ import { NotFoundComponent } from '@app/not-found/not-found.component';
 import { UserComponent } from '@app/users/user/user.component';
 import { NewUserComponent } from '@app/users/new-user/new-user.component';
 import { PatientsComponent } from '@app/patients/patients.component';
+import { NewPatientComponent } from './patients/new-patient/new-patient.component';
+import { PatientComponent } from './patients/patient/patient.component';
 
 const routes: Routes = [
   {
@@ -47,6 +49,18 @@ const routes: Routes = [
     component: UsersComponent,
     canActivate: [AuthGuard],
     data: { permissions: [PermissionEnum.USERS_VIEW] },
+  },
+  {
+    path: 'patients/new',
+    component: NewPatientComponent,
+    canActivate: [AuthGuard],
+    data: { permissions: [PermissionEnum.PATIENTS_EDIT] },
+  },
+  {
+    path: 'patients/:patient_id',
+    component: PatientComponent,
+    canActivate: [AuthGuard],
+    data: { permissions: [PermissionEnum.PATIENTS_VIEW] },
   },
   {
     path: 'patients',

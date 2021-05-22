@@ -39,6 +39,8 @@ import { LoadingComponent } from './loading/loading.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NewUserComponent } from './users/new-user/new-user.component';
 import { PatientsComponent } from './patients/patients.component';
+import { PatientComponent } from './patients/patient/patient.component';
+import { NewPatientComponent } from './patients/new-patient/new-patient.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { PatientsComponent } from './patients/patients.component';
     NotFoundComponent,
     NewUserComponent,
     PatientsComponent,
+    PatientComponent,
+    NewPatientComponent,
   ],
   imports: [
     BrowserModule,

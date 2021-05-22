@@ -27,6 +27,7 @@ export interface Patient extends PatientPost {
 }
 
 export interface Patients {
+  total: number;
   patients: Patient[];
 }
 
@@ -35,6 +36,14 @@ export interface Patients {
 })
 export class PatientsService {
   constructor(private http: HttpClient) {}
+
+  search(q: string) {
+    return this.http.get<Patients>(`${environment.apiUrl}/patients`, {
+      params: {
+        q: q,
+      },
+    });
+  }
 
   getAll() {
     return this.http.get<Patients>(`${environment.apiUrl}/patients`);

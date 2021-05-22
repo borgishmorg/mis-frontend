@@ -8,6 +8,7 @@ import {
   debounceTime,
   distinctUntilChanged,
   map,
+  mergeMap,
   startWith,
 } from 'rxjs/operators';
 
@@ -18,8 +19,7 @@ import {
 })
 export class PatientsComponent implements OnInit {
   searchFieldControl = new FormControl();
-  options: string[] = ['One', 'Two', 'Three', 'Four'];
-  searchResults!: Observable<string[]>;
+  searchResults!: Observable<Patient[]>;
 
   moment = _moment;
 
@@ -35,7 +35,8 @@ export class PatientsComponent implements OnInit {
       startWith(''),
       debounceTime(250),
       distinctUntilChanged(),
-      map((value) => this._filter(value))
+      mergeMap((q) => this.patientsService.search(q)),
+      map((patients) => patients.patients)
     );
     this.loadingService.startLoading();
     this.patientsService.getAll().subscribe((patients) => {
@@ -44,11 +45,13 @@ export class PatientsComponent implements OnInit {
     });
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(
-      (option) => option.toLowerCase().indexOf(filterValue) === 0
-    );
+  search() {
+    this.loadingService.startLoading();
+    this.patientsService
+      .search(this.searchFieldControl.value)
+      .subscribe((patients) => {
+        this.patients = patients.patients;
+        this.loadingService.stopLoading();
+      });
   }
 }

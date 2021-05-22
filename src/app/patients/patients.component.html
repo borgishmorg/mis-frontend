@@ -2,7 +2,7 @@
   <div class="search-container">
     <span style="width: 8em"></span>
     <mat-card class="search-field">
-      <form>
+      <form (ngSubmit)="search()">
         <mat-form-field class="search-input">
           <mat-label>Поиск</mat-label>
           <input
@@ -12,15 +12,27 @@
             [formControl]="searchFieldControl"
             [matAutocomplete]="auto"
           />
-          <button mat-button matSuffix mat-icon-button (click)="(false)">
+          <button mat-button matSuffix mat-icon-button type="submit">
             <mat-icon>search</mat-icon>
           </button>
           <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
             <mat-option
-              *ngFor="let option of searchResults | async"
-              [value]="option"
+              *ngFor="let patient of searchResults | async | slice: 0:5"
+              [value]="
+                patient.surname +
+                ' ' +
+                patient.first_name +
+                ' ' +
+                patient.patronymic
+              "
             >
-              {{ option }}
+              {{
+                patient.surname +
+                  " " +
+                  patient.first_name +
+                  " " +
+                  patient.patronymic
+              }}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>

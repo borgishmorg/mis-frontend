@@ -17,7 +17,6 @@ import { PermissionEnum } from '@app/auth.guard';
 export class ExaminationsComponent implements OnInit {
   @Input() patient_id?: number;
 
-  // MatPaginator Inputs
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 20, 50];
 
@@ -63,6 +62,4 @@ export class ExaminationsComponent implements OnInit {
         });
     }
   }
-
-  add() {}
 }

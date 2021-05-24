@@ -49,6 +49,8 @@ import { NewPatientComponent } from './patients/new-patient/new-patient.componen
 import { ExaminationsComponent } from './examinations/examinations.component';
 import { getRussianPaginatorIntl } from './russian-paginator-intl';
 import * as moment from 'moment';
+import { ExaminationComponent } from './examinations/examination/examination.component';
+import { NewExaminationComponent } from './examinations/new-examination/new-examination.component';
 
 moment.locale('ru');
 
@@ -68,6 +70,8 @@ moment.locale('ru');
     PatientComponent,
     NewPatientComponent,
     ExaminationsComponent,
+    ExaminationComponent,
+    NewExaminationComponent,
   ],
   imports: [
     BrowserModule,

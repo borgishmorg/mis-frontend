@@ -2,25 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PermissionEnum } from '@app/auth.guard';
 import { AuthenticationService } from '@app/services/authentication.service';
+import {
+  Examination,
+  ExaminationsService,
+} from '@app/services/examinations.service';
 import { LoadingService } from '@app/services/loading.service';
 import { NotificationsService } from '@app/services/notifications.service';
-import { Patient, PatientsService } from '@app/services/patients.service';
 import { throwError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 import * as _moment from 'moment';
 
 @Component({
-  selector: 'app-patient',
-  templateUrl: './patient.component.html',
-  styleUrls: ['./patient.component.css'],
+  selector: 'app-examination',
+  templateUrl: './examination.component.html',
+  styleUrls: ['./examination.component.css'],
 })
-export class PatientComponent implements OnInit {
-  patient?: Patient;
-  oldPatient?: Patient;
-
-  moment = _moment;
+export class ExaminationComponent implements OnInit {
+  examination?: Examination;
+  oldExamination?: Examination;
 
   editing = false;
+
+  moment = _moment;
 
   constructor(
     private authService: AuthenticationService,
@@ -28,25 +31,34 @@ export class PatientComponent implements OnInit {
     private router: Router,
     private loadingService: LoadingService,
     private notificationsService: NotificationsService,
-    private patientsService: PatientsService
+    private examinationsService: ExaminationsService
   ) {}
 
-  get canSeeExaminationsTab() {
+  get canView() {
     return this.authService.hasPemissions([PermissionEnum.EXAMINATIONS_VIEW]);
   }
 
   get canEdit() {
-    return this.authService.hasPemission(PermissionEnum.PATIENTS_EDIT);
+    return this.authService.hasPemission(PermissionEnum.EXAMINATIONS_EDIT);
   }
 
   ngOnInit(): void {
+    let _patient_id = -1;
     this.loadingService.startLoading();
     this.route.paramMap
       .pipe(
         mergeMap((params) => {
+          const examination_id = params.get('examination_id');
           const patient_id = params.get('patient_id');
-          if (!patient_id || !+patient_id) return throwError('');
-          return this.patientsService.get(+patient_id);
+          if (
+            !examination_id ||
+            !+examination_id ||
+            !patient_id ||
+            !+patient_id
+          )
+            return throwError('');
+          _patient_id = +patient_id;
+          return this.examinationsService.get(+examination_id);
         })
       )
       .pipe(
@@ -55,15 +67,17 @@ export class PatientComponent implements OnInit {
           return throwError(error);
         })
       )
-      .subscribe((patient) => {
-        this.patient = patient;
-        this.oldPatient = JSON.parse(JSON.stringify(patient));
+      .subscribe((examination) => {
+        this.examination = examination;
+        if (examination.patient_id !== _patient_id)
+          this.router.navigate(['notfound']);
+        this.oldExamination = JSON.parse(JSON.stringify(examination));
         this.loadingService.stopLoading();
       });
   }
 
   back() {
-    this.router.navigate(['/patients']);
+    this.router.navigate([`/patients/${this.examination?.patient_id}`]);
   }
 
   edit() {
@@ -71,14 +85,14 @@ export class PatientComponent implements OnInit {
   }
 
   discard() {
-    this.patient = JSON.parse(JSON.stringify(this.oldPatient));
+    this.examination = JSON.parse(JSON.stringify(this.oldExamination));
   }
 
   save() {
-    if (this.patient) {
+    if (this.examination) {
       this.loadingService.startLoading();
-      this.patientsService
-        .put(this.patient.id, this.patient)
+      this.examinationsService
+        .put(this.examination.id, this.examination)
         .pipe(
           catchError((error) => {
             this.notificationsService.error(error);
@@ -86,9 +100,9 @@ export class PatientComponent implements OnInit {
             return throwError(error);
           })
         )
-        .subscribe((patient) => {
-          this.patient = patient;
-          this.oldPatient = JSON.parse(JSON.stringify(patient));
+        .subscribe((examination) => {
+          this.examination = examination;
+          this.oldExamination = JSON.parse(JSON.stringify(examination));
           this.editing = false;
           this.loadingService.stopLoading();
         });
@@ -96,9 +110,9 @@ export class PatientComponent implements OnInit {
   }
 
   delete() {
-    if (this.patient) {
-      this.patientsService
-        .delete(this.patient.id)
+    if (this.examination) {
+      this.examinationsService
+        .delete(this.examination.id)
         .pipe(
           catchError((error) => {
             this.notificationsService.error(error);
@@ -106,7 +120,7 @@ export class PatientComponent implements OnInit {
           })
         )
         .subscribe(() => {
-          this.router.navigate(['/patients']);
+          this.router.navigate([`/patients/${this.examination?.patient_id}`]);
         });
     }
   }

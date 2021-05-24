@@ -8,6 +8,8 @@ import { User } from '@services/user.service';
 import { PermissionEnum } from '@app/auth.guard';
 
 export interface TokenUser extends User {
+  id: number;
+  login: string;
   permissions: string[];
 }
 

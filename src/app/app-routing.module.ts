@@ -12,6 +12,8 @@ import { NewUserComponent } from '@app/users/new-user/new-user.component';
 import { PatientsComponent } from '@app/patients/patients.component';
 import { NewPatientComponent } from './patients/new-patient/new-patient.component';
 import { PatientComponent } from './patients/patient/patient.component';
+import { ExaminationComponent } from './examinations/examination/examination.component';
+import { NewExaminationComponent } from './examinations/new-examination/new-examination.component';
 
 const routes: Routes = [
   {
@@ -49,6 +51,18 @@ const routes: Routes = [
     component: UsersComponent,
     canActivate: [AuthGuard],
     data: { permissions: [PermissionEnum.USERS_VIEW] },
+  },
+  {
+    path: 'patients/:patient_id/examinations/new',
+    component: NewExaminationComponent,
+    canActivate: [AuthGuard],
+    data: { permissions: [PermissionEnum.EXAMINATIONS_EDIT] },
+  },
+  {
+    path: 'patients/:patient_id/examinations/:examination_id',
+    component: ExaminationComponent,
+    canActivate: [AuthGuard],
+    data: { permissions: [PermissionEnum.EXAMINATIONS_VIEW] },
   },
   {
     path: 'patients/new',

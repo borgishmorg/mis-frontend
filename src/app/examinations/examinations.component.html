@@ -13,18 +13,24 @@
     *ngIf="canEditExaminations"
     class="add-button"
     color="accent"
-    (onclick)="add()"
+    routerLink="examinations/new"
   >
     Добавить
   </button>
 </section>
 <div class="examinations-container">
-  <mat-card class="examination-card" *ngFor="let examination of examinations">
+  <mat-card
+    class="examination-card"
+    *ngFor="let examination of examinations"
+    [routerLink]="'examinations/' + examination.id"
+  >
     <mat-card-title class="examination-card-title">
       Общий осмотр
     </mat-card-title>
     <mat-card-subtitle class="examination-card-subtitle">
-      {{ moment(examination.datetime).format("D MMMM YYYY, h:mm") }}
+      {{
+        moment.utc(examination.datetime).local().format("D MMMM YYYY, HH:mm")
+      }}
     </mat-card-subtitle>
   </mat-card>
 </div>

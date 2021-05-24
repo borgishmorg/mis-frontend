@@ -1,0 +1,40 @@
+.examinations-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.separator {
+  margin-left: auto;
+}
+
+.add-button {
+  height: fit-content;
+  width: fit-content;
+}
+
+.examinations-container {
+  display: grid;
+  width: 50em;
+  grid-template-columns: repeat(auto-fill, 25em);
+  grid-template-rows: auto;
+  align-items: center;
+  justify-content: space-evenly;
+  justify-items: center;
+}
+
+.examination-card {
+  cursor: pointer;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  width: 20em;
+  margin: 0.5em;
+}
+
+.examination-card-title {
+  font-size: medium;
+}
+
+.examination-card-subtitle {
+  font-size: small;
+}

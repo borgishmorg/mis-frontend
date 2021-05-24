@@ -1,0 +1,30 @@
+<section class="examinations-header">
+  <span class="separator"></span>
+  <mat-paginator
+    itemsPerPageLabel="Осмотров на странице:"
+    [length]="total"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="changePage($event)"
+  >
+  </mat-paginator>
+  <button
+    mat-flat-button
+    *ngIf="canEditExaminations"
+    class="add-button"
+    color="accent"
+    (onclick)="add()"
+  >
+    Добавить
+  </button>
+</section>
+<div class="examinations-container">
+  <mat-card class="examination-card" *ngFor="let examination of examinations">
+    <mat-card-title class="examination-card-title">
+      Общий осмотр
+    </mat-card-title>
+    <mat-card-subtitle class="examination-card-subtitle">
+      {{ moment(examination.datetime).format("D MMMM YYYY, h:mm") }}
+    </mat-card-subtitle>
+  </mat-card>
+</div>

@@ -140,7 +140,9 @@
             </mat-card-actions>
           </mat-card>
         </mat-tab>
-        <mat-tab label="Осмотры" *ngIf="canSeeExaminationsTab"></mat-tab>
+        <mat-tab label="Осмотры" *ngIf="canSeeExaminationsTab">
+          <app-examinations [patient_id]="patient.id"></app-examinations>
+        </mat-tab>
       </mat-tab-group>
     </mat-card-content>
   </mat-card>

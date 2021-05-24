@@ -24,6 +24,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTabsModule } from '@angular/material/tabs';
+import {
+  MatPaginatorModule,
+  MatPaginatorIntl,
+} from '@angular/material/paginator';
 //App
 import { AppRoutingModule } from './app-routing.module';
 import { ErrorInterceptor } from './error.interceptor';
@@ -42,6 +46,11 @@ import { NewUserComponent } from './users/new-user/new-user.component';
 import { PatientsComponent } from './patients/patients.component';
 import { PatientComponent } from './patients/patient/patient.component';
 import { NewPatientComponent } from './patients/new-patient/new-patient.component';
+import { ExaminationsComponent } from './examinations/examinations.component';
+import { getRussianPaginatorIntl } from './russian-paginator-intl';
+import * as moment from 'moment';
+
+moment.locale('ru');
 
 @NgModule({
   declarations: [
@@ -58,6 +67,7 @@ import { NewPatientComponent } from './patients/new-patient/new-patient.componen
     PatientsComponent,
     PatientComponent,
     NewPatientComponent,
+    ExaminationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,12 +93,14 @@ import { NewPatientComponent } from './patients/new-patient/new-patient.componen
     MatMomentDateModule,
     MatAutocompleteModule,
     MatTabsModule,
+    MatPaginatorModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: MatPaginatorIntl, useValue: getRussianPaginatorIntl() },
   ],
   bootstrap: [AppComponent],
 })

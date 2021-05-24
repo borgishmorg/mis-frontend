@@ -32,10 +32,12 @@ export interface Examinations {
 export class ExaminationsService {
   constructor(private http: HttpClient) {}
 
-  search(patient_id: number) {
+  search(patient_id: number, offset: number = 0, limit: number = 50) {
     return this.http.get<Examinations>(`${environment.apiUrl}/examinations`, {
       params: {
         patient_id: patient_id.toString(),
+        offset: offset.toString(),
+        limit: limit.toString(),
       },
     });
   }

@@ -1,1 +1,288 @@
-<p>therapist-examination works!</p>
+<div class="card-container">
+  <mat-card class="patient-card" *ngIf="examination && oldExamination">
+    <mat-card-header>
+      <mat-card-title>Терапевтичесикй осмотр</mat-card-title>
+      <mat-card-subtitle>{{
+        moment.utc(examination.datetime).local().format("D MMMM YYYY, HH:mm")
+      }}</mat-card-subtitle>
+      <button mat-button class="back" (click)="back()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-content class="examination-content">
+      <mat-form-field>
+        <mat-label>Пациент:</mat-label>
+        <input
+          matInput
+          type="text"
+          disabled="true"
+          [value]="
+            (examination.patient.surname ? examination.patient.surname : '') +
+            ' ' +
+            (examination.patient.first_name
+              ? examination.patient.first_name
+              : '') +
+            ' ' +
+            (examination.patient.patronymic
+              ? examination.patient.patronymic
+              : '')
+          "
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Врач:</mat-label>
+        <input
+          matInput
+          type="text"
+          disabled="true"
+          [value]="
+            (examination.user.surname ? examination.user.surname : '') +
+            ' ' +
+            (examination.user.first_name ? examination.user.first_name : '') +
+            ' ' +
+            (examination.user.patronymic ? examination.user.patronymic : '')
+          "
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Жалобы:</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.complaints"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Анамнез:</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.anamnesis"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Состояние</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.condition"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Сознание</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.conscious"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Цианоз</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.cyanosis"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Слизистые</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.mucous"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Питание</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.food"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Л/узлы</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.lymph_nodes"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Грудная клетка</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.rib_cage"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Легкие</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.lungs"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Дыхание</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.breath"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Сердце</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.heart"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Язык</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.tongue"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Живот</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.stomach"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Печень</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.liver"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Почки</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.kidneys"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Отеки</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.swelling"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Диурез</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.diuresis"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Объективно:</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.objectively"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Диагноз:</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.diagnosis"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Рекомендации:</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [disabled]="!canEdit || !editing"
+          [(ngModel)]="examination.recomendations"
+        ></textarea>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-button
+        color="accent"
+        *ngIf="canEdit && !editing"
+        (click)="edit()"
+      >
+        Редактировать
+      </button>
+      <button
+        mat-button
+        color="accent"
+        *ngIf="canEdit && editing"
+        (click)="save()"
+      >
+        Сохранить
+      </button>
+      <button mat-button *ngIf="canEdit && editing" (click)="discard()">
+        Сбросить
+      </button>
+      <button
+        mat-button
+        color="warn"
+        *ngIf="canEdit && editing"
+        (click)="delete()"
+      >
+        Удалить
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

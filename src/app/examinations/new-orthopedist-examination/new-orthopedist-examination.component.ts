@@ -123,7 +123,7 @@ export class NewOrthopedistExaminationComponent implements OnInit {
         )
         .subscribe((examination) => {
           this.router.navigate([
-            `/patients/${examination.patient_id}/examinations/${examination.id}`,
+            `/patients/${examination.patient_id}/examinations/${examination.type}/${examination.id}`,
           ]);
         });
     }

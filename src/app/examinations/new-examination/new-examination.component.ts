@@ -16,7 +16,7 @@ import { Patient, PatientsService } from '@app/services/patients.service';
 import { User, UsersService } from '@app/services/user.service';
 
 @Component({
-  selector: 'app-examination',
+  selector: 'app-new-examination',
   templateUrl: './new-examination.component.html',
   styleUrls: ['./new-examination.component.css'],
 })
@@ -112,7 +112,7 @@ export class NewExaminationComponent implements OnInit {
         )
         .subscribe((examination) => {
           this.router.navigate([
-            `patients/${examination.patient_id}/examinations/${examination.id}`,
+            `/patients/${examination.patient_id}/examinations/${examination.type}/${examination.id}`,
           ]);
         });
     }

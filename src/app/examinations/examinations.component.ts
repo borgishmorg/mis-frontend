@@ -37,6 +37,24 @@ export class ExaminationsComponent implements OnInit {
     return this.authService.hasPemission(PermissionEnum.EXAMINATIONS_EDIT);
   }
 
+  get canEditTherapistExaminations() {
+    return this.authService.hasPemission(
+      PermissionEnum.THERAPIST_EXAMINATIONS_EDIT
+    );
+  }
+
+  get canEditSurgeonExaminations() {
+    return this.authService.hasPemission(
+      PermissionEnum.SURGEON_EXAMINATIONS_EDIT
+    );
+  }
+
+  get canEditOrthopedistExaminations() {
+    return this.authService.hasPemission(
+      PermissionEnum.ORTHOPEDIST_EXAMINATIONS_EDIT
+    );
+  }
+
   ngOnInit(): void {
     if (this.patient_id) {
       this.loadingService.startLoading();

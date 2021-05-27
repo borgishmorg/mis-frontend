@@ -24,6 +24,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
 import {
   MatPaginatorModule,
   MatPaginatorIntl,
@@ -110,6 +111,7 @@ moment.locale('ru');
     MatAutocompleteModule,
     MatTabsModule,
     MatPaginatorModule,
+    MatMenuModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },

@@ -12,11 +12,41 @@
     mat-flat-button
     *ngIf="canEditExaminations"
     class="add-button"
+    [matMenuTriggerFor]="menu"
     color="accent"
-    routerLink="examinations/new"
   >
     Добавить
   </button>
+  <mat-menu #menu="matMenu" xPosition="before">
+    <button
+      mat-menu-item
+      *ngIf="canEditExaminations"
+      routerLink="examinations/general/new"
+    >
+      Общий осмотр
+    </button>
+    <button
+      mat-menu-item
+      *ngIf="canEditTherapistExaminations"
+      routerLink="examinations/therapist/new"
+    >
+      Терапевтический осмотр
+    </button>
+    <button
+      mat-menu-item
+      *ngIf="canEditSurgeonExaminations"
+      routerLink="examinations/surgeon/new"
+    >
+      Хирургический осмотр
+    </button>
+    <button
+      mat-menu-item
+      *ngIf="canEditOrthopedistExaminations"
+      routerLink="examinations/orthopedist/new"
+    >
+      Ортопедический осмотр
+    </button>
+  </mat-menu>
 </section>
 <div class="examinations-container">
   <mat-card

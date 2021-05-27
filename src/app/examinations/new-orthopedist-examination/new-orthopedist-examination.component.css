@@ -1,0 +1,23 @@
+.card-container {
+  display: flex;
+  height: 100%;
+  align-content: center;
+  justify-content: center;
+}
+
+.examination-card {
+  margin: auto;
+  margin-bottom: 2em;
+}
+
+.examination-content {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: auto;
+  width: 30em;
+  margin: 0.5em;
+}
+
+.back {
+  margin-left: auto;
+}

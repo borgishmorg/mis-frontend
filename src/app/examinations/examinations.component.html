@@ -25,7 +25,7 @@
     [routerLink]="'examinations/' + examination.id"
   >
     <mat-card-title class="examination-card-title">
-      Общий осмотр
+      {{ getExaminationTitle(examination.type) }}
     </mat-card-title>
     <mat-card-subtitle class="examination-card-subtitle">
       {{

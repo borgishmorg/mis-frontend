@@ -5,6 +5,7 @@ import { AuthenticationService } from '@app/services/authentication.service';
 import {
   ExaminationPost,
   ExaminationsService,
+  ExaminationType,
 } from '@app/services/examinations.service';
 import { LoadingService } from '@app/services/loading.service';
 import { NotificationsService } from '@app/services/notifications.service';
@@ -76,8 +77,10 @@ export class NewExaminationComponent implements OnInit {
           this.examination = {
             anamnesis: '',
             complaints: '',
+            objectively: '',
             diagnosis: '',
             recomendations: '',
+            type: ExaminationType.GENERAL,
             user_id: user_id,
             patient_id: patient.id,
           };

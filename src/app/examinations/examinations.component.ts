@@ -3,7 +3,9 @@ import { PageEvent } from '@angular/material/paginator';
 import * as _moment from 'moment';
 import {
   Examination,
+  ExaminationInfo,
   ExaminationsService,
+  ExaminationType,
 } from '@app/services/examinations.service';
 import { LoadingService } from '@app/services/loading.service';
 import { AuthenticationService } from '@app/services/authentication.service';
@@ -21,7 +23,7 @@ export class ExaminationsComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 20, 50];
 
   total = 0;
-  examinations: Examination[] = [];
+  examinations: ExaminationInfo[] = [];
 
   moment = _moment;
 
@@ -60,6 +62,21 @@ export class ExaminationsComponent implements OnInit {
           this.total = examinations.total;
           this.examinations = examinations.examinations;
         });
+    }
+  }
+
+  getExaminationTitle(examinationType: ExaminationType): string {
+    switch (examinationType) {
+      case ExaminationType.GENERAL:
+        return 'Общий осмотр';
+      case ExaminationType.THERAPIST:
+        return 'Терапевтический осмотр';
+      case ExaminationType.SURGEON:
+        return 'Хирургический осмотр';
+      case ExaminationType.ORTHOPEDIST:
+        return 'Ортопедический осмотр';
+      default:
+        return 'Неизвестный отчет';
     }
   }
 }

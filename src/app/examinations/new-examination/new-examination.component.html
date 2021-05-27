@@ -60,6 +60,15 @@
         ></textarea>
       </mat-form-field>
       <mat-form-field>
+        <mat-label>Объективно:</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          type="text"
+          [(ngModel)]="examination.objectively"
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
         <mat-label>Диагноз:</mat-label>
         <textarea
           matInput

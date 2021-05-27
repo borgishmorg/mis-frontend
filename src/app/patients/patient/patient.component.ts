@@ -32,7 +32,12 @@ export class PatientComponent implements OnInit {
   ) {}
 
   get canSeeExaminationsTab() {
-    return this.authService.hasPemissions([PermissionEnum.EXAMINATIONS_VIEW]);
+    return this.authService.hasPemissions([
+      PermissionEnum.EXAMINATIONS_VIEW,
+      PermissionEnum.THERAPIST_EXAMINATIONS_VIEW,
+      PermissionEnum.SURGEON_EXAMINATIONS_VIEW,
+      PermissionEnum.ORTHOPEDIST_EXAMINATIONS_VIEW,
+    ]);
   }
 
   get canEdit() {

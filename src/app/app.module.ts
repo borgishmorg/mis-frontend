@@ -51,6 +51,12 @@ import { getRussianPaginatorIntl } from './russian-paginator-intl';
 import * as moment from 'moment';
 import { ExaminationComponent } from './examinations/examination/examination.component';
 import { NewExaminationComponent } from './examinations/new-examination/new-examination.component';
+import { TherapistExaminationComponent } from './examinations/therapist-examination/therapist-examination.component';
+import { NewTherapistExaminationComponent } from './examinations/new-therapist-examination/new-therapist-examination.component';
+import { SurgeonExaminationComponent } from './examinations/surgeon-examination/surgeon-examination.component';
+import { NewSurgeonExaminationComponent } from './examinations/new-surgeon-examination/new-surgeon-examination.component';
+import { OrthopedistExaminationComponent } from './examinations/orthopedist-examination/orthopedist-examination.component';
+import { NewOrthopedistExaminationComponent } from './examinations/new-orthopedist-examination/new-orthopedist-examination.component';
 
 moment.locale('ru');
 
@@ -72,6 +78,12 @@ moment.locale('ru');
     ExaminationsComponent,
     ExaminationComponent,
     NewExaminationComponent,
+    TherapistExaminationComponent,
+    NewTherapistExaminationComponent,
+    SurgeonExaminationComponent,
+    NewSurgeonExaminationComponent,
+    OrthopedistExaminationComponent,
+    NewOrthopedistExaminationComponent,
   ],
   imports: [
     BrowserModule,

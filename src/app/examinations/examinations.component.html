@@ -22,7 +22,7 @@
   <mat-card
     class="examination-card"
     *ngFor="let examination of examinations"
-    [routerLink]="'examinations/' + examination.id"
+    [routerLink]="'examinations/' + examination.type + '/' + examination.id"
   >
     <mat-card-title class="examination-card-title">
       {{ getExaminationTitle(examination.type) }}

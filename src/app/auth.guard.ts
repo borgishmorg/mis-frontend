@@ -22,6 +22,15 @@ export enum PermissionEnum {
 
   EXAMINATIONS_EDIT = 'examinations:edit',
   EXAMINATIONS_VIEW = 'examinations:view',
+
+  THERAPIST_EXAMINATIONS_EDIT = 'examinations:therapist:edit',
+  THERAPIST_EXAMINATIONS_VIEW = 'examinations:therapist:view',
+
+  SURGEON_EXAMINATIONS_EDIT = 'examinations:surgeon:edit',
+  SURGEON_EXAMINATIONS_VIEW = 'examinations:surgeon:view',
+
+  ORTHOPEDIST_EXAMINATIONS_EDIT = 'examinations:orthopedist:edit',
+  ORTHOPEDIST_EXAMINATIONS_VIEW = 'examinations:orthopedist:view',
 }
 
 @Injectable({
@@ -49,8 +58,8 @@ export class AuthGuard implements CanActivate {
       route.data.permissions;
     if (
       routePermissions &&
-      !routePermissions.some(
-        (permission) => user.permissions.indexOf(permission) !== -1
+      !routePermissions.some((permission) =>
+        user.permissions.includes(permission)
       )
     ) {
       this.router.navigate(['/']);

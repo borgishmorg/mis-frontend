@@ -64,176 +64,185 @@
           [(ngModel)]="examination.anamnesis"
         ></textarea>
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Состояние</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.condition"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Сознание</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.conscious"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Цианоз</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.cyanosis"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Слизистые</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.mucous"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Питание</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.food"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Л/узлы</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.lymph_nodes"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Грудная клетка</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.rib_cage"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Легкие</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.lungs"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Дыхание</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.breath"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Сердце</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.heart"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Язык</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.tongue"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Живот</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.stomach"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Печень</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.liver"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Почки</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.kidneys"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Отеки</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.swelling"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Диурез</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.diuresis"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Объективно:</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          type="text"
-          [disabled]="!canEdit || !editing"
-          [(ngModel)]="examination.objectively"
-        ></textarea>
-      </mat-form-field>
+      <mat-card class="examination-card">
+        <mat-card-header>
+          <mat-card-title> Объективно </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="examination-content">
+          <mat-form-field>
+            <mat-label>Состояние</mat-label>
+            <input
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.condition"
+            />
+          </mat-form-field>
+          <div>
+            <mat-form-field>
+              <mat-label>Сознание:</mat-label>
+              <input
+                matInput
+                cdkTextareaAutosize
+                type="text"
+                [disabled]="!canEdit || !editing"
+                [(ngModel)]="examination.conscious"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Цианоз:</mat-label>
+              <input
+                matInput
+                cdkTextareaAutosize
+                type="text"
+                [disabled]="!canEdit || !editing"
+                [(ngModel)]="examination.cyanosis"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Слизистые:</mat-label>
+              <input
+                matInput
+                cdkTextareaAutosize
+                type="text"
+                [disabled]="!canEdit || !editing"
+                [(ngModel)]="examination.mucous"
+              />
+            </mat-form-field>
+          </div>
+          <mat-form-field>
+            <mat-label>Питание:</mat-label>
+            <input
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.food"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Периф. л/узлы</mat-label>
+            <input
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.lymph_nodes"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Грудная клетка:</mat-label>
+            <input
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.rib_cage"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Перкуторно над легкими:</mat-label>
+            <input
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.lungs"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Дыхание:</mat-label>
+            <input
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.breath"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Сердце:</mat-label>
+            <input
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.heart"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Язык:</mat-label>
+            <input
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.tongue"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Живот:</mat-label>
+            <textarea
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.stomach"
+            ></textarea>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Печень:</mat-label>
+            <input
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.liver"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Почки:</mat-label>
+            <input
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.kidneys"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Периферические отеки:</mat-label>
+            <input
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.swelling"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Диурез:</mat-label>
+            <input
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.diuresis"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Прочее объективно:</mat-label>
+            <textarea
+              matInput
+              cdkTextareaAutosize
+              type="text"
+              [disabled]="!canEdit || !editing"
+              [(ngModel)]="examination.objectively"
+            ></textarea>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
       <mat-form-field>
         <mat-label>Диагноз:</mat-label>
         <textarea

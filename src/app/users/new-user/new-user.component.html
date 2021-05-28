@@ -10,26 +10,33 @@
       <section class="input-section">
         <div class="input-block">
           <mat-form-field class="input-field">
-            <mat-label>Имя:</mat-label>
-            <input
-              matInput
-              type="text"
-              required="True"
-              [(ngModel)]="user.first_name"
-            />
-          </mat-form-field>
-          <mat-form-field class="input-field">
             <mat-label>Фамилия:</mat-label>
             <input
               matInput
               type="text"
               required="True"
+              maxlength="80"
               [(ngModel)]="user.surname"
             />
           </mat-form-field>
           <mat-form-field class="input-field">
+            <mat-label>Имя:</mat-label>
+            <input
+              matInput
+              type="text"
+              required="True"
+              maxlength="80"
+              [(ngModel)]="user.first_name"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field">
             <mat-label>Отчество:</mat-label>
-            <input matInput type="text" [(ngModel)]="user.patronymic" />
+            <input
+              matInput
+              type="text"
+              maxlength="80"
+              [(ngModel)]="user.patronymic"
+            />
           </mat-form-field>
         </div>
         <div class="input-block">
@@ -39,6 +46,7 @@
               matInput
               type="text"
               required="True"
+              maxlength="255"
               [(ngModel)]="user.login"
             />
           </mat-form-field>
@@ -56,6 +64,7 @@
             <mat-label>День рождения:</mat-label>
             <input
               matInput
+              maxlength="10"
               [matDatepicker]="picker"
               [(ngModel)]="user.birthdate"
             />
@@ -67,15 +76,30 @@
           </mat-form-field>
           <mat-form-field class="input-field">
             <mat-label>Адрес:</mat-label>
-            <input matInput type="text" [(ngModel)]="user.address" />
+            <input
+              matInput
+              type="text"
+              maxlength="255"
+              [(ngModel)]="user.address"
+            />
           </mat-form-field>
           <mat-form-field class="input-field">
             <mat-label>Телефон:</mat-label>
-            <input matInput type="text" [(ngModel)]="user.phone" />
+            <input
+              matInput
+              type="text"
+              maxlength="15"
+              [(ngModel)]="user.phone"
+            />
           </mat-form-field>
           <mat-form-field class="input-field">
             <mat-label>Почта:</mat-label>
-            <input matInput type="email" [(ngModel)]="user.email" />
+            <input
+              matInput
+              type="email"
+              maxlength="320"
+              [(ngModel)]="user.email"
+            />
           </mat-form-field>
           <mat-form-field class="input-field">
             <mat-label>Роль:</mat-label>

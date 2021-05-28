@@ -23,23 +23,25 @@
             />
           </mat-form-field>
           <mat-form-field class="input-field">
-            <mat-label>Имя:</mat-label>
-            <input
-              matInput
-              type="text"
-              required="True"
-              [disabled]="!canEdit"
-              [(ngModel)]="user.first_name"
-            />
-          </mat-form-field>
-          <mat-form-field class="input-field">
             <mat-label>Фамилия:</mat-label>
             <input
               matInput
               type="text"
               required="True"
+              maxlength="80"
               [disabled]="!canEdit"
               [(ngModel)]="user.surname"
+            />
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Имя:</mat-label>
+            <input
+              matInput
+              type="text"
+              required="True"
+              maxlength="80"
+              [disabled]="!canEdit"
+              [(ngModel)]="user.first_name"
             />
           </mat-form-field>
           <mat-form-field class="input-field">
@@ -47,6 +49,7 @@
             <input
               matInput
               type="text"
+              maxlength="80"
               [disabled]="!canEdit"
               [(ngModel)]="user.patronymic"
             />
@@ -59,6 +62,7 @@
               matInput
               type="text"
               required="True"
+              maxlength="255"
               [disabled]="!canEdit"
               [(ngModel)]="user.login"
             />
@@ -78,6 +82,7 @@
             <mat-label>День рождения:</mat-label>
             <input
               matInput
+              maxlength="10"
               [matDatepicker]="picker"
               [disabled]="!canEdit"
               [(ngModel)]="user.birthdate"
@@ -93,6 +98,7 @@
             <input
               matInput
               type="text"
+              maxlength="255"
               [disabled]="!canEdit"
               [(ngModel)]="user.address"
             />
@@ -102,6 +108,7 @@
             <input
               matInput
               type="text"
+              maxlength="15"
               [disabled]="!canEdit"
               [(ngModel)]="user.phone"
             />
@@ -111,6 +118,7 @@
             <input
               matInput
               type="email"
+              maxlength="320"
               [disabled]="!canEdit"
               [(ngModel)]="user.email"
             />

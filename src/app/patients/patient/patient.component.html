@@ -28,6 +28,7 @@
                       matInput
                       type="text"
                       required="True"
+                      maxlength="80"
                       [disabled]="!canEdit || !editing"
                       [(ngModel)]="patient.surname"
                     />
@@ -38,6 +39,7 @@
                       matInput
                       type="text"
                       required="True"
+                      maxlength="80"
                       [disabled]="!canEdit || !editing"
                       [(ngModel)]="patient.first_name"
                     />
@@ -47,6 +49,7 @@
                     <input
                       matInput
                       type="text"
+                      maxlength="80"
                       [disabled]="!canEdit || !editing"
                       [(ngModel)]="patient.patronymic"
                     />
@@ -70,6 +73,7 @@
                     <input
                       matInput
                       [matDatepicker]="picker"
+                      maxlength="10"
                       [disabled]="!canEdit || !editing"
                       [(ngModel)]="patient.birthdate"
                     />
@@ -84,6 +88,7 @@
                     <input
                       matInput
                       type="text"
+                      maxlength="255"
                       [disabled]="!canEdit || !editing"
                       [(ngModel)]="patient.address"
                     />
@@ -93,6 +98,7 @@
                     <input
                       matInput
                       type="text"
+                      maxlength="15"
                       [disabled]="!canEdit || !editing"
                       [(ngModel)]="patient.phone"
                     />
@@ -102,6 +108,7 @@
                     <input
                       matInput
                       type="email"
+                      maxlength="320"
                       [disabled]="!canEdit || !editing"
                       [(ngModel)]="patient.email"
                     />

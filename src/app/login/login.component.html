@@ -1,37 +1,59 @@
-<div class='container'>
-    <mat-card>
-        <mat-card-title>МИС</mat-card-title>        
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <mat-form-field appearance="standard">
-                <mat-label>Логин</mat-label>
-                <input matInput 
-                    type="text" 
-                    formControlName="username" 
-                    [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
-                    placeholder=""
-                />
-                <mat-hint *ngIf="submitted && f.username.errors && f.username.errors.required">Username is required</mat-hint>
-            </mat-form-field>
-            <mat-form-field appearance="standard">
-                <mat-label>Пароль</mat-label>
-                <input matInput  
-                [type]="hidePassword ? 'password' : 'text'"
-                    formControlName="password"
-                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
-                    placeholder=""
-                />
-                <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
-                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-                <mat-hint *ngIf="submitted && f.password.errors && f.password.errors.required">Password is required</mat-hint>
-            </mat-form-field>
-            <button mat-raised-button type="submit" color="primary" [disabled]="loading">
-                <mat-spinner diameter="37" *ngIf="loading"></mat-spinner>
-                <span *ngIf="!loading">Войти</span>
-            </button>
-        </form>
-        <p style="color: red;" *ngIf="error">{{error}}</p>
-        <mat-card-footer>
-        </mat-card-footer>
-    </mat-card>
+<div class="container">
+  <mat-card>
+    <mat-card-title>МИС</mat-card-title>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="standard">
+        <mat-label>Логин</mat-label>
+        <input
+          matInput
+          type="text"
+          maxlength="255"
+          formControlName="username"
+          [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+          placeholder=""
+        />
+        <mat-hint
+          *ngIf="submitted && f.username.errors && f.username.errors.required"
+          >Username is required</mat-hint
+        >
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Пароль</mat-label>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="password"
+          [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+          placeholder=""
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hidePassword = !hidePassword"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePassword"
+        >
+          <mat-icon>{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+        <mat-hint
+          *ngIf="submitted && f.password.errors && f.password.errors.required"
+          >Password is required</mat-hint
+        >
+      </mat-form-field>
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary"
+        [disabled]="loading"
+      >
+        <mat-spinner diameter="37" *ngIf="loading"></mat-spinner>
+        <span *ngIf="!loading">Войти</span>
+      </button>
+    </form>
+    <p style="color: red" *ngIf="error">{{ error }}</p>
+    <mat-card-footer> </mat-card-footer>
+  </mat-card>
 </div>

@@ -50,6 +50,7 @@
           matInput
           cdkTextareaAutosize
           type="text"
+          maxlength="1000"
           [disabled]="!canEdit || !editing"
           [(ngModel)]="examination.complaints"
         ></textarea>
@@ -60,6 +61,7 @@
           matInput
           cdkTextareaAutosize
           type="text"
+          maxlength="1000"
           [disabled]="!canEdit || !editing"
           [(ngModel)]="examination.anamnesis"
         ></textarea>
@@ -70,11 +72,12 @@
         </mat-card-header>
         <mat-card-content class="examination-content">
           <mat-form-field>
-            <mat-label>Состояние</mat-label>
+            <mat-label>Состояние:</mat-label>
             <input
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="200"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.condition"
             />
@@ -86,6 +89,7 @@
                 matInput
                 cdkTextareaAutosize
                 type="text"
+                maxlength="200"
                 [disabled]="!canEdit || !editing"
                 [(ngModel)]="examination.conscious"
               />
@@ -96,6 +100,7 @@
                 matInput
                 cdkTextareaAutosize
                 type="text"
+                maxlength="200"
                 [disabled]="!canEdit || !editing"
                 [(ngModel)]="examination.cyanosis"
               />
@@ -106,6 +111,7 @@
                 matInput
                 cdkTextareaAutosize
                 type="text"
+                maxlength="200"
                 [disabled]="!canEdit || !editing"
                 [(ngModel)]="examination.mucous"
               />
@@ -117,16 +123,18 @@
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="200"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.food"
             />
           </mat-form-field>
           <mat-form-field>
-            <mat-label>Периф. л/узлы</mat-label>
+            <mat-label>Периф. л/узлы:</mat-label>
             <input
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="200"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.lymph_nodes"
             />
@@ -137,6 +145,7 @@
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="200"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.rib_cage"
             />
@@ -147,6 +156,7 @@
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="200"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.lungs"
             />
@@ -157,6 +167,7 @@
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="200"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.breath"
             />
@@ -167,6 +178,7 @@
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="200"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.heart"
             />
@@ -177,6 +189,7 @@
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="200"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.tongue"
             />
@@ -187,6 +200,7 @@
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="200"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.stomach"
             ></textarea>
@@ -197,6 +211,7 @@
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="200"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.liver"
             />
@@ -207,6 +222,7 @@
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="200"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.kidneys"
             />
@@ -217,6 +233,7 @@
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="200"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.swelling"
             />
@@ -227,6 +244,7 @@
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="200"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.diuresis"
             />
@@ -237,6 +255,7 @@
               matInput
               cdkTextareaAutosize
               type="text"
+              maxlength="1000"
               [disabled]="!canEdit || !editing"
               [(ngModel)]="examination.objectively"
             ></textarea>
@@ -249,6 +268,7 @@
           matInput
           cdkTextareaAutosize
           type="text"
+          maxlength="1000"
           [disabled]="!canEdit || !editing"
           [(ngModel)]="examination.diagnosis"
         ></textarea>
@@ -259,6 +279,7 @@
           matInput
           cdkTextareaAutosize
           type="text"
+          maxlength="1000"
           [disabled]="!canEdit || !editing"
           [(ngModel)]="examination.recomendations"
         ></textarea>

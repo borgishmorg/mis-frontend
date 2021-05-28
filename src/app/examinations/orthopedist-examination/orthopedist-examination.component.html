@@ -1,7 +1,7 @@
 <div class="card-container">
   <mat-card class="patient-card" *ngIf="examination && oldExamination">
     <mat-card-header>
-      <mat-card-title>Ортопедический осмотр</mat-card-title>
+      <mat-card-title>Осмотр ортопеда</mat-card-title>
       <mat-card-subtitle>{{
         moment.utc(examination.datetime).local().format("D MMMM YYYY, HH:mm")
       }}</mat-card-subtitle>

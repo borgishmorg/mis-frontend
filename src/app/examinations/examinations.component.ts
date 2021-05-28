@@ -88,13 +88,13 @@ export class ExaminationsComponent implements OnInit {
       case ExaminationType.GENERAL:
         return 'Общий осмотр';
       case ExaminationType.THERAPIST:
-        return 'Терапевтический осмотр';
+        return 'Осмотр терапевта';
       case ExaminationType.SURGEON:
-        return 'Хирургический осмотр';
+        return 'Осмотр хирурга';
       case ExaminationType.ORTHOPEDIST:
-        return 'Ортопедический осмотр';
+        return 'Осмотр ортопеда';
       default:
-        return 'Неизвестный отчет';
+        return 'Неизвестный осмотр';
     }
   }
 }

@@ -58,6 +58,25 @@ import { SurgeonExaminationComponent } from './examinations/surgeon-examination/
 import { NewSurgeonExaminationComponent } from './examinations/new-surgeon-examination/new-surgeon-examination.component';
 import { OrthopedistExaminationComponent } from './examinations/orthopedist-examination/orthopedist-examination.component';
 import { NewOrthopedistExaminationComponent } from './examinations/new-orthopedist-examination/new-orthopedist-examination.component';
+import { jsPDF } from 'jspdf';
+import { font_normal } from '@app/fonts/OpenSans-normal';
+import { font_bold } from '@app/fonts/OpenSans-bold';
+import { font_italic } from '@app/fonts/OpenSans-italic';
+import { font_bolditalic } from '@app/fonts/OpenSans-bolditalic';
+
+jsPDF.API.events.push([
+  'addFonts',
+  function (this: jsPDF) {
+    this.addFileToVFS('OpenSans-normal.ttf', font_normal);
+    this.addFileToVFS('OpenSans-bold.ttf', font_bold);
+    this.addFileToVFS('OpenSans-italic.ttf', font_italic);
+    this.addFileToVFS('OpenSans-bolditalic.ttf', font_bolditalic);
+    this.addFont('OpenSans-normal.ttf', 'OpenSans', 'normal');
+    this.addFont('OpenSans-bold.ttf', 'OpenSans', 'bold');
+    this.addFont('OpenSans-italic.ttf', 'OpenSans', 'italic');
+    this.addFont('OpenSans-bolditalic.ttf', 'OpenSans', 'bolditalic');
+  },
+]);
 
 moment.locale('ru');
 

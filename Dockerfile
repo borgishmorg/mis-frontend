@@ -1,6 +1,7 @@
 FROM node:latest as build
-WORKDIR /usr/local/app
-COPY ./ /usr/local/app/
+WORKDIR /app
+COPY ./ /app/
+COPY ./src/environments/environment.prod.ts /app/src/environments/environment.ts
 RUN npm install
 RUN npm run build
 

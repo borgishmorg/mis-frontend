@@ -8,6 +8,7 @@ import {
 } from '@app/services/examinations.service';
 import { LoadingService } from '@app/services/loading.service';
 import { NotificationsService } from '@app/services/notifications.service';
+import { jsPDF } from 'jspdf';
 import * as _moment from 'moment';
 import { throwError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
@@ -127,5 +128,85 @@ export class OrthopedistExaminationComponent implements OnInit {
           this.router.navigate([`/patients/${this.examination?.patient_id}`]);
         });
     }
+  }
+
+  get patientFullName() {
+    return (
+      (this.examination?.patient.surname
+        ? this.examination?.patient.surname
+        : '') +
+      ' ' +
+      (this.examination?.patient.first_name
+        ? this.examination?.patient.first_name
+        : '') +
+      ' ' +
+      (this.examination?.patient.patronymic
+        ? this.examination?.patient.patronymic
+        : '')
+    );
+  }
+
+  get doctorFullName() {
+    return (
+      (this.examination?.user.surname ? this.examination?.user.surname : '') +
+      ' ' +
+      (this.examination?.user.first_name
+        ? this.examination?.user.first_name
+        : '') +
+      ' ' +
+      (this.examination?.user.patronymic
+        ? this.examination?.user.patronymic
+        : '')
+    );
+  }
+
+  pdf() {
+    const doc = new jsPDF({});
+    const header = 'ОСМОТР ОРТОПЕДА';
+    const text = `
+Дата: ${_moment
+      .utc(this.examination?.datetime)
+      .local()
+      .format('D MMMM YYYY')} Время: ${_moment
+      .utc(this.examination?.datetime)
+      .local()
+      .format('HH:mm')}
+
+Жалобы: ${this.examination?.complaints}
+Анамнез: ${this.examination?.anamnesis}
+Объективно: Ось позвоночника: ${
+      this.examination?.spine_axis
+    }, верхних конечностей: ${this.examination?.upper_limb_axis}, нижних: ${
+      this.examination?.lower_limb_axis
+    }. Асиметрия: ${
+      this.examination?.asymmetry
+    }. Функции в крупных суставах верхних конечностей: ${
+      this.examination?.upper_limb_joints_functions
+    }, нижних: ${
+      this.examination?.lower_limb_joints_functions
+    }. Деформации стоп: ${
+      this.examination?.foot_deformation
+    }. Нейро-вазальные расстройства: ${
+      this.examination?.neurovascular_disorders
+    }. 
+${this.examination?.objectively}
+Диагноз: ${this.examination?.diagnosis}
+Рекомендации: ${this.examination?.recomendations}
+
+Врач: ${this.doctorFullName}
+    `;
+    doc.setFontSize(16);
+    doc.setFont('OpenSans', 'bold');
+    doc.text(header, 105, 15, {
+      align: 'center',
+    });
+    doc.setFontSize(14);
+    doc.setFont('OpenSans', 'normal');
+    doc.text(doc.splitTextToSize(text, 190), 10, 25, {});
+    doc.save(
+      `${header} ${this.patientFullName} ${_moment(this.examination?.datetime)
+        .local()
+        .format('D MMMM YYYY')}`
+    );
   }
 }

@@ -12,37 +12,11 @@
     <mat-card-content class="examination-content">
       <mat-form-field>
         <mat-label>Пациент:</mat-label>
-        <input
-          matInput
-          type="text"
-          disabled="true"
-          [value]="
-            (examination.patient.surname ? examination.patient.surname : '') +
-            ' ' +
-            (examination.patient.first_name
-              ? examination.patient.first_name
-              : '') +
-            ' ' +
-            (examination.patient.patronymic
-              ? examination.patient.patronymic
-              : '')
-          "
-        />
+        <input matInput type="text" disabled="true" [value]="patientFullName" />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Врач:</mat-label>
-        <input
-          matInput
-          type="text"
-          disabled="true"
-          [value]="
-            (examination.user.surname ? examination.user.surname : '') +
-            ' ' +
-            (examination.user.first_name ? examination.user.first_name : '') +
-            ' ' +
-            (examination.user.patronymic ? examination.user.patronymic : '')
-          "
-        />
+        <input matInput type="text" disabled="true" [value]="doctorFullName" />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Жалобы:</mat-label>
@@ -173,7 +147,7 @@
         ></textarea>
       </mat-form-field>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions style="display: flex">
       <button
         mat-button
         color="accent"
@@ -182,6 +156,8 @@
       >
         Редактировать
       </button>
+      <span style="flex: 1 1 auto" *ngIf="!editing"></span>
+      <button mat-stroked-button *ngIf="!editing" (click)="pdf()">PDF</button>
       <button
         mat-button
         color="accent"

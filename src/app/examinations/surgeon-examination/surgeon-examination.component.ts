@@ -8,6 +8,7 @@ import {
 } from '@app/services/examinations.service';
 import { LoadingService } from '@app/services/loading.service';
 import { NotificationsService } from '@app/services/notifications.service';
+import { jsPDF } from 'jspdf';
 import * as _moment from 'moment';
 import { throwError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
@@ -127,5 +128,75 @@ export class SurgeonExaminationComponent implements OnInit {
           this.router.navigate([`/patients/${this.examination?.patient_id}`]);
         });
     }
+  }
+
+  get patientFullName() {
+    return (
+      (this.examination?.patient.surname
+        ? this.examination?.patient.surname
+        : '') +
+      ' ' +
+      (this.examination?.patient.first_name
+        ? this.examination?.patient.first_name
+        : '') +
+      ' ' +
+      (this.examination?.patient.patronymic
+        ? this.examination?.patient.patronymic
+        : '')
+    );
+  }
+
+  get doctorFullName() {
+    return (
+      (this.examination?.user.surname ? this.examination?.user.surname : '') +
+      ' ' +
+      (this.examination?.user.first_name
+        ? this.examination?.user.first_name
+        : '') +
+      ' ' +
+      (this.examination?.user.patronymic
+        ? this.examination?.user.patronymic
+        : '')
+    );
+  }
+
+  pdf() {
+    const doc = new jsPDF({});
+    const header = 'ОСМОТР ХИРУРГА';
+    const text = `
+Дата: ${_moment
+      .utc(this.examination?.datetime)
+      .local()
+      .format('D MMMM YYYY')} Время: ${_moment
+      .utc(this.examination?.datetime)
+      .local()
+      .format('HH:mm')}
+
+Жалобы: ${this.examination?.complaints}
+Анамнез: ${this.examination?.anamnesis}
+Объективно: Состояние: ${this.examination?.condition}.
+Живот: ${this.examination?.stomach}. Грыжи: ${this.examination?.hernia}. 
+Операции: ${this.examination?.operations}. Травмы: ${
+      this.examination?.trauma
+    }. Патологии на момент осмотра: ${this.examination?.pathology}.
+${this.examination?.objectively}
+Диагноз: ${this.examination?.diagnosis}
+Рекомендации: ${this.examination?.recomendations}
+
+Врач: ${this.doctorFullName}
+    `;
+    doc.setFontSize(16);
+    doc.setFont('OpenSans', 'bold');
+    doc.text(header, 105, 15, {
+      align: 'center',
+    });
+    doc.setFontSize(14);
+    doc.setFont('OpenSans', 'normal');
+    doc.text(doc.splitTextToSize(text, 190), 10, 25, {});
+    doc.save(
+      `${header} ${this.patientFullName} ${_moment(this.examination?.datetime)
+        .local()
+        .format('D MMMM YYYY')}`
+    );
   }
 }

@@ -10,6 +10,7 @@ import { LoadingService } from '@app/services/loading.service';
 import { NotificationsService } from '@app/services/notifications.service';
 import { throwError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
+import { jsPDF } from 'jspdf';
 import * as _moment from 'moment';
 
 @Component({
@@ -123,5 +124,70 @@ export class ExaminationComponent implements OnInit {
           this.router.navigate([`/patients/${this.examination?.patient_id}`]);
         });
     }
+  }
+
+  get patientFullName() {
+    return (
+      (this.examination?.patient.surname
+        ? this.examination?.patient.surname
+        : '') +
+      ' ' +
+      (this.examination?.patient.first_name
+        ? this.examination?.patient.first_name
+        : '') +
+      ' ' +
+      (this.examination?.patient.patronymic
+        ? this.examination?.patient.patronymic
+        : '')
+    );
+  }
+
+  get doctorFullName() {
+    return (
+      (this.examination?.user.surname ? this.examination?.user.surname : '') +
+      ' ' +
+      (this.examination?.user.first_name
+        ? this.examination?.user.first_name
+        : '') +
+      ' ' +
+      (this.examination?.user.patronymic
+        ? this.examination?.user.patronymic
+        : '')
+    );
+  }
+
+  pdf() {
+    const doc = new jsPDF({});
+    const header = 'ОБЩИЙ ОСМОТР';
+    const text = `
+Дата: ${_moment
+      .utc(this.examination?.datetime)
+      .local()
+      .format('D MMMM YYYY')} Время: ${_moment
+      .utc(this.examination?.datetime)
+      .local()
+      .format('HH:mm')}
+
+Жалобы: ${this.examination?.complaints}
+Анамнез: ${this.examination?.anamnesis}
+Объективно: ${this.examination?.objectively}
+Диагноз: ${this.examination?.diagnosis}
+Рекомендации: ${this.examination?.recomendations}
+
+Врач: ${this.doctorFullName}
+    `;
+    doc.setFontSize(16);
+    doc.setFont('OpenSans', 'bold');
+    doc.text(header, 105, 15, {
+      align: 'center',
+    });
+    doc.setFontSize(14);
+    doc.setFont('OpenSans', 'normal');
+    doc.text(doc.splitTextToSize(text, 190), 10, 25, {});
+    doc.save(
+      `${header} ${this.patientFullName} ${_moment(this.examination?.datetime)
+        .local()
+        .format('D MMMM YYYY')}`
+    );
   }
 }

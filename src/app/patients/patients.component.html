@@ -16,7 +16,7 @@
           <button mat-button matSuffix mat-icon-button type="submit">
             <mat-icon>search</mat-icon>
           </button>
-          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-autocomplete #auto="matAutocomplete">
             <mat-option
               *ngFor="let patient of searchResults | async | slice: 0:5"
               [value]="

@@ -20,6 +20,8 @@ import { NewSurgeonExaminationComponent } from './examinations/new-surgeon-exami
 import { SurgeonExaminationComponent } from './examinations/surgeon-examination/surgeon-examination.component';
 import { NewOrthopedistExaminationComponent } from './examinations/new-orthopedist-examination/new-orthopedist-examination.component';
 import { OrthopedistExaminationComponent } from './examinations/orthopedist-examination/orthopedist-examination.component';
+import { ResearchComponent } from './researches/research/research.component';
+import { NewResearchComponent } from './researches/new-examination/new-research.component';
 
 const routes: Routes = [
   {
@@ -57,6 +59,18 @@ const routes: Routes = [
     component: UsersComponent,
     canActivate: [AuthGuard],
     data: { permissions: [PermissionEnum.USERS_VIEW] },
+  },
+  {
+    path: 'patients/:patient_id/researches/new',
+    component: NewResearchComponent,
+    canActivate: [AuthGuard],
+    data: { permissions: [PermissionEnum.RESEARCHES_EDIT] },
+  },
+  {
+    path: 'patients/:patient_id/researches/:research_id',
+    component: ResearchComponent,
+    canActivate: [AuthGuard],
+    data: { permissions: [PermissionEnum.RESEARCHES_VIEW] },
   },
   {
     path: 'patients/:patient_id/examinations/general/new',

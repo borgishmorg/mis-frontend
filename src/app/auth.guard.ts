@@ -31,6 +31,9 @@ export enum PermissionEnum {
 
   ORTHOPEDIST_EXAMINATIONS_EDIT = 'examinations:orthopedist:edit',
   ORTHOPEDIST_EXAMINATIONS_VIEW = 'examinations:orthopedist:view',
+
+  RESEARCHES_EDIT = 'researches:edit',
+  RESEARCHES_VIEW = 'researches:view',
 }
 
 @Injectable({

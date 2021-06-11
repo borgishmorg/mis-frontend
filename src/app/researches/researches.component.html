@@ -1,0 +1,34 @@
+<section class="researches-header">
+  <span class="separator"></span>
+  <mat-paginator
+    itemsPerPageLabel="Осмотров на странице:"
+    [length]="total"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="changePage($event)"
+  >
+  </mat-paginator>
+  <button
+    mat-flat-button
+    *ngIf="canEditResearches"
+    class="add-button"
+    color="accent"
+    routerLink="researches/new"
+  >
+    Добавить
+  </button>
+</section>
+<div class="researches-container">
+  <mat-card
+    class="research-card"
+    *ngFor="let research of researches"
+    [routerLink]="'researches/' + research.id"
+  >
+    <mat-card-title class="research-card-title">
+      {{ research.name }}
+    </mat-card-title>
+    <mat-card-subtitle class="research-card-subtitle">
+      {{ moment.utc(research.datetime).local().format("D MMMM YYYY, HH:mm") }}
+    </mat-card-subtitle>
+  </mat-card>
+</div>

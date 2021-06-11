@@ -49,7 +49,6 @@ import { PatientComponent } from './patients/patient/patient.component';
 import { NewPatientComponent } from './patients/new-patient/new-patient.component';
 import { ExaminationsComponent } from './examinations/examinations.component';
 import { getRussianPaginatorIntl } from './russian-paginator-intl';
-import * as moment from 'moment';
 import { ExaminationComponent } from './examinations/examination/examination.component';
 import { NewExaminationComponent } from './examinations/new-examination/new-examination.component';
 import { TherapistExaminationComponent } from './examinations/therapist-examination/therapist-examination.component';
@@ -58,6 +57,10 @@ import { SurgeonExaminationComponent } from './examinations/surgeon-examination/
 import { NewSurgeonExaminationComponent } from './examinations/new-surgeon-examination/new-surgeon-examination.component';
 import { OrthopedistExaminationComponent } from './examinations/orthopedist-examination/orthopedist-examination.component';
 import { NewOrthopedistExaminationComponent } from './examinations/new-orthopedist-examination/new-orthopedist-examination.component';
+import { ResearchesComponent } from './researches/researches.component';
+import { ResearchComponent } from './researches/research/research.component';
+import { NewResearchComponent } from './researches/new-examination/new-research.component';
+import * as moment from 'moment';
 import { jsPDF } from 'jspdf';
 import { font_normal } from '@app/fonts/OpenSans-normal';
 import { font_bold } from '@app/fonts/OpenSans-bold';
@@ -104,6 +107,9 @@ moment.locale('ru');
     NewSurgeonExaminationComponent,
     OrthopedistExaminationComponent,
     NewOrthopedistExaminationComponent,
+    ResearchesComponent,
+    ResearchComponent,
+    NewResearchComponent,
   ],
   imports: [
     BrowserModule,

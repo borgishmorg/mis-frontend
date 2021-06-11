@@ -40,6 +40,10 @@ export class PatientComponent implements OnInit {
     ]);
   }
 
+  get canSeeResearchesTab() {
+    return this.authService.hasPemission(PermissionEnum.RESEARCHES_VIEW);
+  }
+
   get canEdit() {
     return this.authService.hasPemission(PermissionEnum.PATIENTS_EDIT);
   }

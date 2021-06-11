@@ -150,6 +150,9 @@
         <mat-tab label="Осмотры" *ngIf="canSeeExaminationsTab">
           <app-examinations [patient_id]="patient.id"></app-examinations>
         </mat-tab>
+        <mat-tab label="Исследования" *ngIf="canSeeResearchesTab">
+          <app-researches [patient_id]="patient.id"></app-researches>
+        </mat-tab>
       </mat-tab-group>
     </mat-card-content>
   </mat-card>

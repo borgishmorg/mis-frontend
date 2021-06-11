@@ -1,0 +1,40 @@
+.researches-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.separator {
+  margin-left: auto;
+}
+
+.add-button {
+  height: fit-content;
+  width: fit-content;
+}
+
+.researches-container {
+  display: grid;
+  width: 50em;
+  grid-template-columns: repeat(auto-fill, 25em);
+  grid-template-rows: auto;
+  align-items: center;
+  justify-content: space-evenly;
+  justify-items: center;
+}
+
+.research-card {
+  cursor: pointer;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  width: 20em;
+  margin: 0.5em;
+}
+
+.research-card-title {
+  font-size: medium;
+}
+
+.research-card-subtitle {
+  font-size: small;
+}
